@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>2ab8c46eef5f47cbaa71179152490c2b</title>
+  <title>4ff69e8dfac04a53824f7e83b8ba96fe</title>
   <style>
     html {
       line-height: 1.5;
@@ -269,7 +269,7 @@ participants can refer to in their daily decisions.</p>
 <div id="458672c9" class="cell markdown">
 <h3 id="imports">Imports</h3>
 </div>
-<div id="ef661682" class="cell code" data-execution_count="272">
+<div id="ef661682" class="cell code" data-execution_count="119">
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import necessary libraries</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -337,13 +337,13 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a hr
 <div id="38bb8f96" class="cell markdown">
 <p>!! End !!</p>
 </div>
-<div id="ff4a301d" class="cell code" data-execution_count="74"
+<div id="ff4a301d" class="cell code" data-execution_count="120"
 data-scrolled="true">
 <div class="sourceCode" id="cb4"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read data into the dataframe from the csv file</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>results_df <span class="op">=</span> pd.read_csv(<span class="st">&quot;data/conn_real_estate_sample.csv&quot;</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>results_df</span></code></pre></div>
-<div class="output execute_result" data-execution_count="74">
+<div class="output execute_result" data-execution_count="120">
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -641,7 +641,7 @@ the time from the date field to clean it up. We also separate out the
 year and the month into new fields of their own for more general
 analysis.</p>
 </div>
-<div id="e5488728" class="cell code" data-execution_count="75"
+<div id="e5488728" class="cell code" data-execution_count="122"
 data-scrolled="true">
 <div class="sourceCode" id="cb5"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># drop unnecessary columns</span></span>
@@ -657,7 +657,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a hr
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;Year&#39;</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">&#39;daterecorded&#39;</span>], <span class="bu">format</span><span class="op">=</span><span class="st">&quot;%Y-%m-</span><span class="sc">%d</span><span class="st">&quot;</span>).dt.strftime(<span class="st">&#39;%Y&#39;</span>)</span>
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;Month&#39;</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">&#39;daterecorded&#39;</span>], <span class="bu">format</span><span class="op">=</span><span class="st">&quot;%Y-%m-</span><span class="sc">%d</span><span class="st">&quot;</span>).dt.strftime(<span class="st">&#39;%m&#39;</span>)</span>
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
-<div class="output execute_result" data-execution_count="75">
+<div class="output execute_result" data-execution_count="122">
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -884,14 +884,14 @@ use string operations to extract the x and y coordinates, which are
 placed into their own respective fields. This way, we can better examine
 where the coordinates of a specific record belong.</p>
 </div>
-<div id="c3fbdd5b" class="cell code" data-execution_count="76">
+<div id="c3fbdd5b" class="cell code" data-execution_count="123">
 <div class="sourceCode" id="cb6"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract the coordinates from the geo coordinates field and separate into x and y coordinates</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;coord&#39;</span>] <span class="op">=</span> df[<span class="st">&#39;geo_coordinates&#39;</span>].astype(<span class="bu">str</span>).<span class="bu">str</span>.extract(<span class="st">&#39;\[(.*?)\]&#39;</span>, expand<span class="op">=</span><span class="va">False</span>).<span class="bu">str</span>.strip()</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">&#39;x_coord&#39;</span>,<span class="st">&#39;y_coord&#39;</span>]] <span class="op">=</span> df.coord.<span class="bu">str</span>.split(<span class="st">&quot;, &quot;</span>,expand<span class="op">=</span><span class="va">True</span>).astype(<span class="bu">float</span>)</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.drop(columns <span class="op">=</span> [<span class="st">&#39;geo_coordinates&#39;</span>, <span class="st">&#39;coord&#39;</span>])</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>df.head()</span></code></pre></div>
-<div class="output execute_result" data-execution_count="76">
+<div class="output execute_result" data-execution_count="123">
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1031,11 +1031,11 @@ third quartile + (1.5 * IQR) is equal to 0.70 + 1.5(0.70 - 0.49) =
 outlier and we can remove it from the dataset and also use this upper
 fence to filter out unreasonably high values.</p>
 </div>
-<div id="e6713ef7" class="cell code" data-execution_count="77">
+<div id="e6713ef7" class="cell code" data-execution_count="124">
 <div class="sourceCode" id="cb7"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display a summary of the dataframe</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df.describe()</span></code></pre></div>
-<div class="output execute_result" data-execution_count="77">
+<div class="output execute_result" data-execution_count="124">
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1149,12 +1149,12 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a hr
 </div>
 </div>
 </div>
-<div id="f852e257" class="cell code" data-execution_count="78">
+<div id="f852e257" class="cell code" data-execution_count="125">
 <div class="sourceCode" id="cb8"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remove sales ratio outliers</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df[df[<span class="st">&#39;salesratio&#39;</span>] <span class="op">&lt;</span> <span class="fl">1.015</span>]</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
-<div class="output execute_result" data-execution_count="78">
+<div class="output execute_result" data-execution_count="125">
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1408,7 +1408,7 @@ for data collection. Check out more information on webscraping using
 selenium and BeautifulSoup <a
 href="https://medium.com/ymedialabs-innovation/web-scraping-using-beautiful-soup-and-selenium-for-dynamic-page-2f8ad15efe25#:~:text=The%20combination%20of%20Beautiful%20Soup,be%20extracted%20by%20Beautiful%20Soup">here</a>.</p>
 </div>
-<div id="9611817f" class="cell code">
+<div id="9611817f" class="cell code" data-execution_count="126">
 <div class="sourceCode" id="cb9"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># url of the page we are scraping</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">&quot;https://www.firstrepublic.com/finmkts/historical-interest-rates&quot;</span></span>
@@ -1425,62 +1425,179 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a hr
 <span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co"># apply bs4 to html variable</span></span>
 <span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(html, <span class="st">&quot;html.parser&quot;</span>)</span></code></pre></div>
+<div class="output stream stderr">
+<pre><code>/var/folders/04/hdjfckkd4fd__5521d_kggjh0000gn/T/ipykernel_72246/1552962359.py:5: DeprecationWarning: executable_path has been deprecated, please pass in a Service object
+</code></pre>
+</div>
+<div class="output error" data-ename="WebDriverException"
+data-evalue="Message: unknown error: cannot find Chrome binary
+Stacktrace:
+0   chromedriver                        0x00000001009eb8ac chromedriver + 4257964
+1   chromedriver                        0x00000001009e3f40 chromedriver + 4226880
+2   chromedriver                        0x00000001006209d4 chromedriver + 281044
+3   chromedriver                        0x0000000100647778 chromedriver + 440184
+4   chromedriver                        0x0000000100645c38 chromedriver + 433208
+5   chromedriver                        0x00000001006833dc chromedriver + 685020
+6   chromedriver                        0x0000000100682c08 chromedriver + 683016
+7   chromedriver                        0x000000010064f98c chromedriver + 473484
+8   chromedriver                        0x000000010065098c chromedriver + 477580
+9   chromedriver                        0x00000001009aa900 chromedriver + 3991808
+10  chromedriver                        0x00000001009ae354 chromedriver + 4006740
+11  chromedriver                        0x00000001009ae940 chromedriver + 4008256
+12  chromedriver                        0x00000001009b433c chromedriver + 4031292
+13  chromedriver                        0x00000001009aef34 chromedriver + 4009780
+14  chromedriver                        0x0000000100987490 chromedriver + 3847312
+15  chromedriver                        0x00000001009cc9f4 chromedriver + 4131316
+16  chromedriver                        0x00000001009ccb4c chromedriver + 4131660
+17  chromedriver                        0x00000001009dd230 chromedriver + 4198960
+18  libsystem_pthread.dylib             0x000000018708826c _pthread_start + 148
+19  libsystem_pthread.dylib             0x000000018708308c thread_start + 8
+">
+<pre><code>---------------------------------------------------------------------------
+WebDriverException                        Traceback (most recent call last)
+Cell In[126], line 5
+      2 url = &quot;https://www.firstrepublic.com/finmkts/historical-interest-rates&quot;
+      4 # initiating the webdriver. Parameter includes the path of the webdriver.
+----&gt; 5 driver = webdriver.Chrome(&#39;./chromedriver&#39;) 
+      6 driver.get(url) 
+      8 # ensures that the page is loaded
+
+File ~/Documents/cmsc320/lib/python3.10/site-packages/selenium/webdriver/chrome/webdriver.py:84, in WebDriver.__init__(self, executable_path, port, options, service_args, desired_capabilities, service_log_path, chrome_options, service, keep_alive)
+     81     service = Service(executable_path, port, service_args, service_log_path)
+     82 service.path = DriverFinder.get_path(service, options)
+---&gt; 84 super().__init__(
+     85     DesiredCapabilities.CHROME[&quot;browserName&quot;],
+     86     &quot;goog&quot;,
+     87     port,
+     88     options,
+     89     service_args,
+     90     desired_capabilities,
+     91     service_log_path,
+     92     service,
+     93     keep_alive,
+     94 )
+
+File ~/Documents/cmsc320/lib/python3.10/site-packages/selenium/webdriver/chromium/webdriver.py:104, in ChromiumDriver.__init__(self, browser_name, vendor_prefix, port, options, service_args, desired_capabilities, service_log_path, service, keep_alive)
+    101 self.service.start()
+    103 try:
+--&gt; 104     super().__init__(
+    105         command_executor=ChromiumRemoteConnection(
+    106             remote_server_addr=self.service.service_url,
+    107             browser_name=browser_name,
+    108             vendor_prefix=vendor_prefix,
+    109             keep_alive=keep_alive,
+    110             ignore_proxy=_ignore_proxy,
+    111         ),
+    112         options=options,
+    113     )
+    114 except Exception:
+    115     self.quit()
+
+File ~/Documents/cmsc320/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py:286, in WebDriver.__init__(self, command_executor, desired_capabilities, browser_profile, proxy, keep_alive, file_detector, options)
+    284 self._authenticator_id = None
+    285 self.start_client()
+--&gt; 286 self.start_session(capabilities, browser_profile)
+
+File ~/Documents/cmsc320/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py:378, in WebDriver.start_session(self, capabilities, browser_profile)
+    376 w3c_caps = _make_w3c_caps(capabilities)
+    377 parameters = {&quot;capabilities&quot;: w3c_caps}
+--&gt; 378 response = self.execute(Command.NEW_SESSION, parameters)
+    379 if &quot;sessionId&quot; not in response:
+    380     response = response[&quot;value&quot;]
+
+File ~/Documents/cmsc320/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py:440, in WebDriver.execute(self, driver_command, params)
+    438 response = self.command_executor.execute(driver_command, params)
+    439 if response:
+--&gt; 440     self.error_handler.check_response(response)
+    441     response[&quot;value&quot;] = self._unwrap_value(response.get(&quot;value&quot;, None))
+    442     return response
+
+File ~/Documents/cmsc320/lib/python3.10/site-packages/selenium/webdriver/remote/errorhandler.py:245, in ErrorHandler.check_response(self, response)
+    243         alert_text = value[&quot;alert&quot;].get(&quot;text&quot;)
+    244     raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+--&gt; 245 raise exception_class(message, screen, stacktrace)
+
+WebDriverException: Message: unknown error: cannot find Chrome binary
+Stacktrace:
+0   chromedriver                        0x00000001009eb8ac chromedriver + 4257964
+1   chromedriver                        0x00000001009e3f40 chromedriver + 4226880
+2   chromedriver                        0x00000001006209d4 chromedriver + 281044
+3   chromedriver                        0x0000000100647778 chromedriver + 440184
+4   chromedriver                        0x0000000100645c38 chromedriver + 433208
+5   chromedriver                        0x00000001006833dc chromedriver + 685020
+6   chromedriver                        0x0000000100682c08 chromedriver + 683016
+7   chromedriver                        0x000000010064f98c chromedriver + 473484
+8   chromedriver                        0x000000010065098c chromedriver + 477580
+9   chromedriver                        0x00000001009aa900 chromedriver + 3991808
+10  chromedriver                        0x00000001009ae354 chromedriver + 4006740
+11  chromedriver                        0x00000001009ae940 chromedriver + 4008256
+12  chromedriver                        0x00000001009b433c chromedriver + 4031292
+13  chromedriver                        0x00000001009aef34 chromedriver + 4009780
+14  chromedriver                        0x0000000100987490 chromedriver + 3847312
+15  chromedriver                        0x00000001009cc9f4 chromedriver + 4131316
+16  chromedriver                        0x00000001009ccb4c chromedriver + 4131660
+17  chromedriver                        0x00000001009dd230 chromedriver + 4198960
+18  libsystem_pthread.dylib             0x000000018708826c _pthread_start + 148
+19  libsystem_pthread.dylib             0x000000018708308c thread_start + 8
+
+</code></pre>
+</div>
 </div>
 <div id="6aedf606" class="cell code">
-<div class="sourceCode" id="cb10"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># find all table tag in the html</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>table <span class="op">=</span> soup.find_all(<span class="st">&quot;table&quot;</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># take the third table tag and isolate only the necessary data and divide</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># the data into rows</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>arr <span class="op">=</span> <span class="bu">str</span>(table[<span class="dv">2</span>]).split(<span class="st">&quot;&lt;tbody&gt;&quot;</span>)</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>arr <span class="op">=</span> arr[<span class="dv">1</span>].split(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>arr <span class="op">=</span> arr[<span class="op">-</span><span class="dv">2</span>].split(<span class="st">&quot;&lt;tr&gt;&quot;</span>)</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>arr <span class="op">=</span> arr[<span class="dv">1</span>:]</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co"># make a dataframe</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>df1 <span class="op">=</span> pd.DataFrame(arr)</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co"># iterate over the dataframe</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, row <span class="kw">in</span> df1.iterrows():</span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># split the entries</span></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    arr <span class="op">=</span> row[<span class="dv">0</span>].split(<span class="st">&quot;&lt;td&gt;&quot;</span>)</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get the month/year value</span></span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    date <span class="op">=</span> arr[<span class="dv">1</span>][:<span class="op">-</span><span class="dv">5</span>]</span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># break if outside of our date range</span></span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> date[<span class="op">-</span><span class="dv">4</span>:] <span class="op">==</span> <span class="st">&#39;2000&#39;</span>:</span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get the interest rate</span></span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    prime_rate <span class="op">=</span> <span class="bu">float</span>(arr[<span class="dv">4</span>][:<span class="op">-</span><span class="dv">11</span>])</span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># parse the date and split into year and month</span></span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>    df1.at[i, <span class="st">&#39;Year&#39;</span>] <span class="op">=</span> pd.to_datetime(date, <span class="bu">format</span><span class="op">=</span><span class="st">&quot;%m/%Y&quot;</span>).year</span>
-<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>    df1.at[i, <span class="st">&#39;Month&#39;</span>] <span class="op">=</span> pd.to_datetime(date, <span class="bu">format</span><span class="op">=</span><span class="st">&quot;%m/%Y&quot;</span>).month</span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>    <span class="co"># set the interest rate</span></span>
-<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>    df1.at[i, <span class="st">&#39;primeRate&#39;</span>] <span class="op">=</span> prime_rate</span>
-<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a><span class="co"># drop all na values and unnecessary columns</span></span>
-<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>df1.dropna(inplace<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>df1.drop(columns<span class="op">=</span>[<span class="dv">0</span>], inplace<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a><span class="co"># cast types</span></span>
-<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>df1[<span class="st">&#39;Year&#39;</span>] <span class="op">=</span> df1[<span class="st">&#39;Year&#39;</span>].astype(<span class="bu">int</span>)</span>
-<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>df1[<span class="st">&#39;Month&#39;</span>] <span class="op">=</span> df1[<span class="st">&#39;Month&#39;</span>].astype(<span class="bu">int</span>)</span>
-<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a><span class="co"># write to csv</span></span>
-<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>df_rate <span class="op">=</span> df1.copy()</span>
-<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>df_rate.to_csv(<span class="st">&quot;data/conn_interest_rate.csv&quot;</span>, index<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>df_rate</span>
-<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># find all table tag in the html</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>table <span class="op">=</span> soup.find_all(<span class="st">&quot;table&quot;</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># take the third table tag and isolate only the necessary data and divide</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># the data into rows</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>arr <span class="op">=</span> <span class="bu">str</span>(table[<span class="dv">2</span>]).split(<span class="st">&quot;&lt;tbody&gt;&quot;</span>)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>arr <span class="op">=</span> arr[<span class="dv">1</span>].split(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>arr <span class="op">=</span> arr[<span class="op">-</span><span class="dv">2</span>].split(<span class="st">&quot;&lt;tr&gt;&quot;</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>arr <span class="op">=</span> arr[<span class="dv">1</span>:]</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co"># make a dataframe</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>df1 <span class="op">=</span> pd.DataFrame(arr)</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="co"># iterate over the dataframe</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, row <span class="kw">in</span> df1.iterrows():</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># split the entries</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>    arr <span class="op">=</span> row[<span class="dv">0</span>].split(<span class="st">&quot;&lt;td&gt;&quot;</span>)</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get the month/year value</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>    date <span class="op">=</span> arr[<span class="dv">1</span>][:<span class="op">-</span><span class="dv">5</span>]</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># break if outside of our date range</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> date[<span class="op">-</span><span class="dv">4</span>:] <span class="op">==</span> <span class="st">&#39;2000&#39;</span>:</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get the interest rate</span></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>    prime_rate <span class="op">=</span> <span class="bu">float</span>(arr[<span class="dv">4</span>][:<span class="op">-</span><span class="dv">11</span>])</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># parse the date and split into year and month</span></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>    df1.at[i, <span class="st">&#39;Year&#39;</span>] <span class="op">=</span> pd.to_datetime(date, <span class="bu">format</span><span class="op">=</span><span class="st">&quot;%m/%Y&quot;</span>).year</span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>    df1.at[i, <span class="st">&#39;Month&#39;</span>] <span class="op">=</span> pd.to_datetime(date, <span class="bu">format</span><span class="op">=</span><span class="st">&quot;%m/%Y&quot;</span>).month</span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>    <span class="co"># set the interest rate</span></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>    df1.at[i, <span class="st">&#39;primeRate&#39;</span>] <span class="op">=</span> prime_rate</span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a><span class="co"># drop all na values and unnecessary columns</span></span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>df1.dropna(inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>df1.drop(columns<span class="op">=</span>[<span class="dv">0</span>], inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a><span class="co"># cast types</span></span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a>df1[<span class="st">&#39;Year&#39;</span>] <span class="op">=</span> df1[<span class="st">&#39;Year&#39;</span>].astype(<span class="bu">int</span>)</span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a>df1[<span class="st">&#39;Month&#39;</span>] <span class="op">=</span> df1[<span class="st">&#39;Month&#39;</span>].astype(<span class="bu">int</span>)</span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a><span class="co"># write to csv</span></span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>df_rate <span class="op">=</span> df1.copy()</span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a>df_rate.to_csv(<span class="st">&quot;data/conn_interest_rate.csv&quot;</span>, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a>df_rate</span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
 </div>
-<div id="44968773" class="cell code" data-execution_count="81">
-<div class="sourceCode" id="cb11"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># if web driver error</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df_rate <span class="op">=</span> pd.read_csv(<span class="st">&quot;data/conn_interest_rate.csv&quot;</span>)</span></code></pre></div>
+<div id="44968773" class="cell code">
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># if web driver error</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>df_rate <span class="op">=</span> pd.read_csv(<span class="st">&quot;data/conn_interest_rate.csv&quot;</span>)</span></code></pre></div>
 </div>
 <div id="d1360dac" class="cell markdown">
 <h2 id="data-collection-unemployment-rates">Data Collection:
@@ -1497,11 +1614,11 @@ on unemployment rates. The U.S. Bureau of Labor Statistics provides a <a
 href="https://data.bls.gov/pdq/SurveyOutputServlet">dataset of labor
 statistics</a> which we use below.</p>
 </div>
-<div id="b0e5ed4c" class="cell code" data-execution_count="82">
-<div class="sourceCode" id="cb12"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read unemployment data into the dataframe</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>unemployment_df <span class="op">=</span> pd.read_csv(<span class="st">&quot;data/conn_unemployment.csv&quot;</span>)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>unemployment_df.head()</span></code></pre></div>
+<div id="b0e5ed4c" class="cell code">
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read unemployment data into the dataframe</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>unemployment_df <span class="op">=</span> pd.read_csv(<span class="st">&quot;data/conn_unemployment.csv&quot;</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>unemployment_df.head()</span></code></pre></div>
 <div class="output execute_result" data-execution_count="82">
 <div>
 <style scoped>
@@ -1637,29 +1754,29 @@ so that the months become values and we end up with the year, month, and
 unemployment rate as columns. To learn more about tidy data click <a
 href="http://vita.had.co.nz/papers/tidy-data.pdf">here</a>.</p>
 </div>
-<div id="a614f1e7" class="cell code" data-execution_count="83">
-<div class="sourceCode" id="cb13"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># identify the columns of the dataframe</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>unemployment_df.columns</span></code></pre></div>
+<div id="a614f1e7" class="cell code">
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># identify the columns of the dataframe</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>unemployment_df.columns</span></code></pre></div>
 <div class="output execute_result" data-execution_count="83">
 <pre><code>Index([&#39;Year&#39;, &#39;Jan&#39;, &#39;Feb&#39;, &#39;Mar&#39;, &#39;Apr&#39;, &#39;May&#39;, &#39;Jun&#39;, &#39;Jul&#39;, &#39;Aug&#39;, &#39;Sep&#39;,
        &#39;Oct&#39;, &#39;Nov&#39;, &#39;Dec&#39;],
       dtype=&#39;object&#39;)</code></pre>
 </div>
 </div>
-<div id="9b21dcd1" class="cell code" data-execution_count="84">
-<div class="sourceCode" id="cb15"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># melt the dataframe</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>unemployment_df <span class="op">=</span> pd.melt(unemployment_df, </span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>        id_vars<span class="op">=</span>[<span class="st">&#39;Year&#39;</span>], </span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>        value_vars<span class="op">=</span>[<span class="st">&#39;Jan&#39;</span>, <span class="st">&#39;Feb&#39;</span>, <span class="st">&#39;Mar&#39;</span>, <span class="st">&#39;Apr&#39;</span>, <span class="st">&#39;May&#39;</span>, <span class="st">&#39;Jun&#39;</span>, <span class="st">&#39;Jul&#39;</span>, </span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&#39;Aug&#39;</span>, <span class="st">&#39;Sep&#39;</span>, <span class="st">&#39;Oct&#39;</span>, <span class="st">&#39;Nov&#39;</span>, <span class="st">&#39;Dec&#39;</span>],</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>        var_name<span class="op">=</span><span class="st">&#39;Month&#39;</span>, </span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>        value_name<span class="op">=</span><span class="st">&#39;UnemploymentRate&#39;</span>)</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co"># drop missing values</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>unemployment_df.dropna(inplace<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>unemployment_df.head()</span></code></pre></div>
+<div id="9b21dcd1" class="cell code">
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># melt the dataframe</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>unemployment_df <span class="op">=</span> pd.melt(unemployment_df, </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>        id_vars<span class="op">=</span>[<span class="st">&#39;Year&#39;</span>], </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>        value_vars<span class="op">=</span>[<span class="st">&#39;Jan&#39;</span>, <span class="st">&#39;Feb&#39;</span>, <span class="st">&#39;Mar&#39;</span>, <span class="st">&#39;Apr&#39;</span>, <span class="st">&#39;May&#39;</span>, <span class="st">&#39;Jun&#39;</span>, <span class="st">&#39;Jul&#39;</span>, </span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&#39;Aug&#39;</span>, <span class="st">&#39;Sep&#39;</span>, <span class="st">&#39;Oct&#39;</span>, <span class="st">&#39;Nov&#39;</span>, <span class="st">&#39;Dec&#39;</span>],</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>        var_name<span class="op">=</span><span class="st">&#39;Month&#39;</span>, </span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>        value_name<span class="op">=</span><span class="st">&#39;UnemploymentRate&#39;</span>)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co"># drop missing values</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>unemployment_df.dropna(inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>unemployment_df.head()</span></code></pre></div>
 <div class="output execute_result" data-execution_count="84">
 <div>
 <style scoped>
@@ -1720,18 +1837,18 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a h
 </div>
 </div>
 </div>
-<div id="d9a70adf" class="cell code" data-execution_count="85">
-<div class="sourceCode" id="cb16"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># array of months</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>months <span class="op">=</span> [<span class="st">&#39;Jan&#39;</span>, <span class="st">&#39;Feb&#39;</span>, <span class="st">&#39;Mar&#39;</span>, <span class="st">&#39;Apr&#39;</span>, <span class="st">&#39;May&#39;</span>, <span class="st">&#39;Jun&#39;</span>, <span class="st">&#39;Jul&#39;</span>, </span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&#39;Aug&#39;</span>, <span class="st">&#39;Sep&#39;</span>, <span class="st">&#39;Oct&#39;</span>, <span class="st">&#39;Nov&#39;</span>, <span class="st">&#39;Dec&#39;</span>]</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co"># format the year and month into datetime objects</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, row <span class="kw">in</span> unemployment_df.iterrows():</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    unemployment_df.at[i, <span class="st">&#39;Year&#39;</span>] <span class="op">=</span> pd.to_datetime(row[<span class="st">&#39;Year&#39;</span>], <span class="bu">format</span><span class="op">=</span><span class="st">&quot;%Y&quot;</span>).year</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    unemployment_df.at[i, <span class="st">&#39;Month&#39;</span>] <span class="op">=</span> pd.to_datetime((<span class="bu">int</span>(months.index(row[<span class="st">&#39;Month&#39;</span>])) <span class="op">+</span> <span class="dv">1</span>), <span class="bu">format</span><span class="op">=</span><span class="st">&quot;%m&quot;</span>).month</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>unemployment_df.head()</span></code></pre></div>
+<div id="d9a70adf" class="cell code">
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># array of months</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>months <span class="op">=</span> [<span class="st">&#39;Jan&#39;</span>, <span class="st">&#39;Feb&#39;</span>, <span class="st">&#39;Mar&#39;</span>, <span class="st">&#39;Apr&#39;</span>, <span class="st">&#39;May&#39;</span>, <span class="st">&#39;Jun&#39;</span>, <span class="st">&#39;Jul&#39;</span>, </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&#39;Aug&#39;</span>, <span class="st">&#39;Sep&#39;</span>, <span class="st">&#39;Oct&#39;</span>, <span class="st">&#39;Nov&#39;</span>, <span class="st">&#39;Dec&#39;</span>]</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># format the year and month into datetime objects</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, row <span class="kw">in</span> unemployment_df.iterrows():</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    unemployment_df.at[i, <span class="st">&#39;Year&#39;</span>] <span class="op">=</span> pd.to_datetime(row[<span class="st">&#39;Year&#39;</span>], <span class="bu">format</span><span class="op">=</span><span class="st">&quot;%Y&quot;</span>).year</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    unemployment_df.at[i, <span class="st">&#39;Month&#39;</span>] <span class="op">=</span> pd.to_datetime((<span class="bu">int</span>(months.index(row[<span class="st">&#39;Month&#39;</span>])) <span class="op">+</span> <span class="dv">1</span>), <span class="bu">format</span><span class="op">=</span><span class="st">&quot;%m&quot;</span>).month</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>unemployment_df.head()</span></code></pre></div>
 <div class="output execute_result" data-execution_count="85">
 <div>
 <style scoped>
@@ -1804,17 +1921,17 @@ being able to compare data across different datasets. Learn more about
 joins <a
 href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.join.html">here</a>.</p>
 </div>
-<div id="c750c5af" class="cell code" data-execution_count="86">
-<div class="sourceCode" id="cb17"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># drop missing values</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>df_copy <span class="op">=</span> df.copy().dropna(subset<span class="op">=</span>[<span class="st">&#39;Year&#39;</span>, <span class="st">&#39;Month&#39;</span>])</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>df_copy[<span class="st">&#39;Year&#39;</span>] <span class="op">=</span> df_copy[<span class="st">&#39;Year&#39;</span>].astype(<span class="bu">int</span>)</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>df_copy[<span class="st">&#39;Month&#39;</span>] <span class="op">=</span> df_copy[<span class="st">&#39;Month&#39;</span>].astype(<span class="bu">int</span>)</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># join the real estate data and unemployment data</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>df_merge <span class="op">=</span> pd.merge(df_copy, unemployment_df, on<span class="op">=</span>[<span class="st">&#39;Year&#39;</span>, <span class="st">&#39;Month&#39;</span>])</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>df_merge</span></code></pre></div>
+<div id="c750c5af" class="cell code">
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># drop missing values</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>df_copy <span class="op">=</span> df.copy().dropna(subset<span class="op">=</span>[<span class="st">&#39;Year&#39;</span>, <span class="st">&#39;Month&#39;</span>])</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>df_copy[<span class="st">&#39;Year&#39;</span>] <span class="op">=</span> df_copy[<span class="st">&#39;Year&#39;</span>].astype(<span class="bu">int</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>df_copy[<span class="st">&#39;Month&#39;</span>] <span class="op">=</span> df_copy[<span class="st">&#39;Month&#39;</span>].astype(<span class="bu">int</span>)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># join the real estate data and unemployment data</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>df_merge <span class="op">=</span> pd.merge(df_copy, unemployment_df, on<span class="op">=</span>[<span class="st">&#39;Year&#39;</span>, <span class="st">&#39;Month&#39;</span>])</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>df_merge</span></code></pre></div>
 <div class="output execute_result" data-execution_count="86">
 <div>
 <style scoped>
@@ -2056,11 +2173,11 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a h
 </div>
 </div>
 </div>
-<div id="89ad20dc" class="cell code" data-execution_count="87">
-<div class="sourceCode" id="cb18"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># join the merged datasets and also the interest rate dataset to combine all three datasets</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>df_merge <span class="op">=</span> pd.merge(df_merge, df_rate, on<span class="op">=</span>[<span class="st">&#39;Year&#39;</span>, <span class="st">&#39;Month&#39;</span>])</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>df_merge</span></code></pre></div>
+<div id="89ad20dc" class="cell code">
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># join the merged datasets and also the interest rate dataset to combine all three datasets</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>df_merge <span class="op">=</span> pd.merge(df_merge, df_rate, on<span class="op">=</span>[<span class="st">&#39;Year&#39;</span>, <span class="st">&#39;Month&#39;</span>])</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>df_merge</span></code></pre></div>
 <div class="output execute_result" data-execution_count="87">
 <div>
 <style scoped>
@@ -2324,12 +2441,12 @@ dataset by making a heatmap indicating the strength of the relationship
 between different features.</p>
 </div>
 <div id="e93541b3" class="cell code">
-<div class="sourceCode" id="cb19"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>correlation <span class="op">=</span> df_merge[[<span class="st">&#39;UnemploymentRate&#39;</span>, <span class="st">&#39;primeRate&#39;</span>, <span class="st">&#39;Year&#39;</span>, <span class="st">&#39;assessedvalue&#39;</span>, <span class="st">&#39;saleamount&#39;</span>, <span class="st">&#39;salesratio&#39;</span>]].corr()</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># create a heatmap of the correlation matrix</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">10</span>))</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>sns.heatmap(correlation, cmap<span class="op">=</span><span class="st">&#39;coolwarm&#39;</span>, annot<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>correlation <span class="op">=</span> df_merge[[<span class="st">&#39;UnemploymentRate&#39;</span>, <span class="st">&#39;primeRate&#39;</span>, <span class="st">&#39;Year&#39;</span>, <span class="st">&#39;assessedvalue&#39;</span>, <span class="st">&#39;saleamount&#39;</span>, <span class="st">&#39;salesratio&#39;</span>]].corr()</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co"># create a heatmap of the correlation matrix</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">10</span>))</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>sns.heatmap(correlation, cmap<span class="op">=</span><span class="st">&#39;coolwarm&#39;</span>, annot<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax)</span></code></pre></div>
 </div>
 <div id="6cbe29fb" class="cell markdown">
 <p>Our main course of analysis will be examining the sales ratio value,
@@ -2353,24 +2470,24 @@ to create a unique list of residential types, capture the number of
 real-estate units that match each residential type, and create a new
 column to display the collective counts.</p>
 </div>
-<div id="3468c761" class="cell code" data-execution_count="88">
-<div class="sourceCode" id="cb20"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get a unique list of the residential types</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>cleanedList <span class="op">=</span> [x <span class="cf">for</span> x <span class="kw">in</span> results_df.residentialtype.unique() <span class="cf">if</span> x <span class="op">==</span> x]</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a dataframe with just the town and residential type columns</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>residential_df <span class="op">=</span> results_df[[<span class="st">&#39;town&#39;</span>,<span class="st">&#39;residentialtype&#39;</span>]]</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plus residential type counts for each town</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>count_resident_df <span class="op">=</span> residential_df.groupby([<span class="st">&#39;town&#39;</span>,<span class="st">&#39;residentialtype&#39;</span>]).size().reset_index(name<span class="op">=</span><span class="st">&#39;count&#39;</span>)</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Shows the amount of each residential type for each town where each column is a residential type and another column for the town </span></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>residential_df <span class="op">=</span> count_resident_df.pivot_table(values<span class="op">=</span><span class="st">&#39;count&#39;</span>, index<span class="op">=</span><span class="st">&#39;town&#39;</span>, columns<span class="op">=</span><span class="st">&#39;residentialtype&#39;</span>,fill_value<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>temp <span class="op">=</span> residential_df</span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>residential_df</span></code></pre></div>
+<div id="3468c761" class="cell code">
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get a unique list of the residential types</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>cleanedList <span class="op">=</span> [x <span class="cf">for</span> x <span class="kw">in</span> results_df.residentialtype.unique() <span class="cf">if</span> x <span class="op">==</span> x]</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a dataframe with just the town and residential type columns</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>residential_df <span class="op">=</span> results_df[[<span class="st">&#39;town&#39;</span>,<span class="st">&#39;residentialtype&#39;</span>]]</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plus residential type counts for each town</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>count_resident_df <span class="op">=</span> residential_df.groupby([<span class="st">&#39;town&#39;</span>,<span class="st">&#39;residentialtype&#39;</span>]).size().reset_index(name<span class="op">=</span><span class="st">&#39;count&#39;</span>)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Shows the amount of each residential type for each town where each column is a residential type and another column for the town </span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>residential_df <span class="op">=</span> count_resident_df.pivot_table(values<span class="op">=</span><span class="st">&#39;count&#39;</span>, index<span class="op">=</span><span class="st">&#39;town&#39;</span>, columns<span class="op">=</span><span class="st">&#39;residentialtype&#39;</span>,fill_value<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>temp <span class="op">=</span> residential_df</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>residential_df</span></code></pre></div>
 <div class="output execute_result" data-execution_count="88">
 <div>
 <style scoped>
@@ -2508,19 +2625,19 @@ vs each residential type. We'll start by grouping entries with the same
 residential type, and aggregating their sales ratios to calculate their
 mean/average value.</p>
 </div>
-<div id="500b96cf" class="cell code" data-execution_count="89">
-<div class="sourceCode" id="cb21"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># real-estate unit entries grouped by their residential type vs and average sales ratio</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>residential_df <span class="op">=</span> results_df.groupby(<span class="st">&#39;residentialtype&#39;</span>).agg({<span class="st">&#39;salesratio&#39;</span>: <span class="st">&#39;mean&#39;</span>})</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># made into a bar graph</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>residential_df.plot.bar(figsize<span class="op">=</span>(<span class="dv">20</span>,<span class="dv">10</span>), title<span class="op">=</span><span class="st">&#39;Sales Ratio by Residential Type&#39;</span>, ylabel<span class="op">=</span><span class="st">&#39;Sales Ratio&#39;</span>, xlabel<span class="op">=</span><span class="st">&#39;Residential Type&#39;</span>)</span></code></pre></div>
+<div id="500b96cf" class="cell code">
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># real-estate unit entries grouped by their residential type vs and average sales ratio</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>residential_df <span class="op">=</span> results_df.groupby(<span class="st">&#39;residentialtype&#39;</span>).agg({<span class="st">&#39;salesratio&#39;</span>: <span class="st">&#39;mean&#39;</span>})</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># made into a bar graph</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>residential_df.plot.bar(figsize<span class="op">=</span>(<span class="dv">20</span>,<span class="dv">10</span>), title<span class="op">=</span><span class="st">&#39;Sales Ratio by Residential Type&#39;</span>, ylabel<span class="op">=</span><span class="st">&#39;Sales Ratio&#39;</span>, xlabel<span class="op">=</span><span class="st">&#39;Residential Type&#39;</span>)</span></code></pre></div>
 <div class="output execute_result" data-execution_count="89">
 <pre><code>&lt;Axes: title={&#39;center&#39;: &#39;Sales Ratio by Residential Type&#39;}, xlabel=&#39;Town&#39;, ylabel=&#39;Sales Ratio&#39;&gt;</code></pre>
 </div>
 <div class="output display_data">
 <p><img
-src="vertopal_31db626cf60f4e4a9ac6e5c0803b2f47/5dc4f082922048bc1f3d284a410626e97e026655.png"
+src="vertopal_1a7841c621db4f89a322eb173a598744/5dc4f082922048bc1f3d284a410626e97e026655.png"
 width="2000" height="1000" /></p>
 </div>
 </div>
@@ -2539,28 +2656,27 @@ average sales ratio, and then we will look at how sales ratio differs
 with locations not guided by town borders using a map. Let's start by
 making a bar graph with the town and salesratio columns!</p>
 </div>
-<div id="fb1af68e" class="cell code" data-execution_count="90"
-data-scrolled="true">
-<div class="sourceCode" id="cb23"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make table with just town and salesratio columns</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>df4 <span class="op">=</span> df_merge[[<span class="st">&#39;town&#39;</span>, <span class="st">&#39;salesratio&#39;</span>]]</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># convert all salesratio values to floats</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>df4[<span class="st">&#39;salesratio&#39;</span>] <span class="op">=</span> df4[<span class="st">&#39;salesratio&#39;</span>].astype(<span class="bu">float</span>)</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co"># group by town and average the salesratio</span></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>df4 <span class="op">=</span> df4.groupby(<span class="st">&#39;town&#39;</span>).mean()</span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="co"># remove the rows where town is &#39;***Unknown***&#39;</span></span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>df4 <span class="op">=</span> df4[df4.index <span class="op">!=</span> <span class="st">&#39;***Unknown***&#39;</span>]</span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>df4.head()</span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="co"># bar graph with town vs salesratio</span></span>
-<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>df4.plot.bar(figsize<span class="op">=</span>(<span class="dv">30</span>,<span class="dv">10</span>), title<span class="op">=</span><span class="st">&#39;Average Sales Ratio by Town&#39;</span>)</span>
-<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Town&#39;</span>)</span>
-<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Average Sales Ratio&#39;</span>)</span>
-<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<div id="fb1af68e" class="cell code" data-scrolled="true">
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make table with just town and salesratio columns</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>df4 <span class="op">=</span> df_merge[[<span class="st">&#39;town&#39;</span>, <span class="st">&#39;salesratio&#39;</span>]]</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># convert all salesratio values to floats</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>df4[<span class="st">&#39;salesratio&#39;</span>] <span class="op">=</span> df4[<span class="st">&#39;salesratio&#39;</span>].astype(<span class="bu">float</span>)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co"># group by town and average the salesratio</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>df4 <span class="op">=</span> df4.groupby(<span class="st">&#39;town&#39;</span>).mean()</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="co"># remove the rows where town is &#39;***Unknown***&#39;</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>df4 <span class="op">=</span> df4[df4.index <span class="op">!=</span> <span class="st">&#39;***Unknown***&#39;</span>]</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>df4.head()</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="co"># bar graph with town vs salesratio</span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>df4.plot.bar(figsize<span class="op">=</span>(<span class="dv">30</span>,<span class="dv">10</span>), title<span class="op">=</span><span class="st">&#39;Average Sales Ratio by Town&#39;</span>)</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Town&#39;</span>)</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Average Sales Ratio&#39;</span>)</span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
 <div class="output stream stderr">
 <pre><code>/var/folders/04/hdjfckkd4fd__5521d_kggjh0000gn/T/ipykernel_72246/2815784812.py:5: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame.
@@ -2571,14 +2687,14 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 <div class="output display_data">
 <p><img
-src="vertopal_31db626cf60f4e4a9ac6e5c0803b2f47/b83f3a23406875938c5bc6f6ca3d5a830e96f614.png"
+src="vertopal_1a7841c621db4f89a322eb173a598744/b83f3a23406875938c5bc6f6ca3d5a830e96f614.png"
 width="3000" height="1000" /></p>
 </div>
 </div>
-<div id="415a98ab" class="cell code" data-execution_count="91">
-<div class="sourceCode" id="cb25"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># summary of bar graph</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>df4.describe()</span></code></pre></div>
+<div id="415a98ab" class="cell code">
+<div class="sourceCode" id="cb27"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># summary of bar graph</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>df4.describe()</span></code></pre></div>
 <div class="output execute_result" data-execution_count="91">
 <div>
 <style scoped>
@@ -2647,20 +2763,20 @@ values that exceed the upper outlier values. To make it easier to
 identify these values, let's plot a horizontal line on our bar graph at
 y=0.709136.</p>
 </div>
-<div id="47bc0900" class="cell code" data-execution_count="92">
-<div class="sourceCode" id="cb26"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>df4.plot.bar(figsize<span class="op">=</span>(<span class="dv">30</span>,<span class="dv">10</span>), title<span class="op">=</span><span class="st">&#39;Average Sales Ratio by Town&#39;</span>)</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Town&#39;</span>)</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Average Sales Ratio&#39;</span>)</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co"># add a horizontal line y=0.709136 to plt</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>plt.axhline(y<span class="op">=</span><span class="fl">0.709136</span>, color<span class="op">=</span><span class="st">&#39;r&#39;</span>, linestyle<span class="op">=</span><span class="st">&#39;-&#39;</span>)</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">30</span>,<span class="dv">10</span>))</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<div id="47bc0900" class="cell code">
+<div class="sourceCode" id="cb28"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>df4.plot.bar(figsize<span class="op">=</span>(<span class="dv">30</span>,<span class="dv">10</span>), title<span class="op">=</span><span class="st">&#39;Average Sales Ratio by Town&#39;</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Town&#39;</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Average Sales Ratio&#39;</span>)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co"># add a horizontal line y=0.709136 to plt</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>plt.axhline(y<span class="op">=</span><span class="fl">0.709136</span>, color<span class="op">=</span><span class="st">&#39;r&#39;</span>, linestyle<span class="op">=</span><span class="st">&#39;-&#39;</span>)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">30</span>,<span class="dv">10</span>))</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
 <div class="output display_data">
 <p><img
-src="vertopal_31db626cf60f4e4a9ac6e5c0803b2f47/197826cbd2cc94d838ed660af7d69fb2fb9e7cd4.png"
+src="vertopal_1a7841c621db4f89a322eb173a598744/197826cbd2cc94d838ed660af7d69fb2fb9e7cd4.png"
 width="3000" height="1000" /></p>
 </div>
 <div class="output display_data">
@@ -2683,10 +2799,10 @@ and latitude (x_coord) values, and label each point/marker with its
 address name, on a map of Connecticut. This way, we can get a better
 visual of where houses are generally located in the state.</p>
 </div>
-<div id="e80fa5e1" class="cell code" data-execution_count="93">
-<div class="sourceCode" id="cb28"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># summary of bar graph</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>df4.describe()</span></code></pre></div>
+<div id="e80fa5e1" class="cell code">
+<div class="sourceCode" id="cb30"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># summary of bar graph</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>df4.describe()</span></code></pre></div>
 <div class="output execute_result" data-execution_count="93">
 <div>
 <style scoped>
@@ -2773,28 +2889,28 @@ longitude (y_coord) and latitude (x_coord) values, and label each
 point/marker with its address name. This way, we can get a better visual
 of where houses are generally located in Connecticut.</p>
 </div>
-<div id="af0a4dbc" class="cell code" data-execution_count="94">
-<div class="sourceCode" id="cb29"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remove all rows with nan as x_coord or y_coord</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>df5 <span class="op">=</span> df_merge.dropna(subset<span class="op">=</span>[<span class="st">&#39;x_coord&#39;</span>, <span class="st">&#39;y_coord&#39;</span>])<span class="op">\</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co"># create a map centered on connecticut</span></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> folium.Map(location<span class="op">=</span>[<span class="fl">41.6</span>, <span class="op">-</span><span class="fl">72.7</span>], zoom_start<span class="op">=</span><span class="dv">9</span>)</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="co"># plot all addresses on the map</span></span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, row <span class="kw">in</span> df5.iterrows():</span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    folium.CircleMarker(</span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>        [row[<span class="st">&#39;y_coord&#39;</span>], row[<span class="st">&#39;x_coord&#39;</span>]],</span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>        radius<span class="op">=</span><span class="dv">5</span>,</span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>        popup<span class="op">=</span>row[<span class="st">&#39;salesratio&#39;</span>],</span>
-<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span><span class="st">&#39;blue&#39;</span>,</span>
-<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>        fill<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>        fill_color<span class="op">=</span><span class="st">&#39;#3186cc&#39;</span>,</span>
-<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>        fill_opacity<span class="op">=</span><span class="fl">0.7</span>,</span>
-<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>row[<span class="st">&#39;salesratio&#39;</span>]</span>
-<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>    ).add_to(m)</span>
-<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>m</span></code></pre></div>
+<div id="af0a4dbc" class="cell code">
+<div class="sourceCode" id="cb31"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remove all rows with nan as x_coord or y_coord</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>df5 <span class="op">=</span> df_merge.dropna(subset<span class="op">=</span>[<span class="st">&#39;x_coord&#39;</span>, <span class="st">&#39;y_coord&#39;</span>])<span class="op">\</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="co"># create a map centered on connecticut</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> folium.Map(location<span class="op">=</span>[<span class="fl">41.6</span>, <span class="op">-</span><span class="fl">72.7</span>], zoom_start<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="co"># plot all addresses on the map</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, row <span class="kw">in</span> df5.iterrows():</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    folium.CircleMarker(</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>        [row[<span class="st">&#39;y_coord&#39;</span>], row[<span class="st">&#39;x_coord&#39;</span>]],</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>        radius<span class="op">=</span><span class="dv">5</span>,</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>        popup<span class="op">=</span>row[<span class="st">&#39;salesratio&#39;</span>],</span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span><span class="st">&#39;blue&#39;</span>,</span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>        fill<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>        fill_color<span class="op">=</span><span class="st">&#39;#3186cc&#39;</span>,</span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>        fill_opacity<span class="op">=</span><span class="fl">0.7</span>,</span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>row[<span class="st">&#39;salesratio&#39;</span>]</span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>    ).add_to(m)</span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>m</span></code></pre></div>
 <div class="output execute_result" data-execution_count="94">
 <div style="width:100%;"><div style="position:relative;width:100%;height:0;padding-bottom:60%;"><span style="color:#565656">Make this Notebook Trusted to load map: File -> Trust Notebook</span><iframe srcdoc="&lt;!DOCTYPE html&gt;
 &lt;html&gt;
@@ -42925,16 +43041,16 @@ plot the points onto a graph with x_coord and y_coord as our axes, and
 include a color scale to indicate how high/low the points' sales ratios
 are? Let's try it out!</p>
 </div>
-<div id="7bfd8acb" class="cell code" data-execution_count="95">
-<div class="sourceCode" id="cb30"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creates a scatter plot of x_coord vs y_coord, where the color of the points is determined by the salesratio</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>df_merge.plot.scatter(x<span class="op">=</span><span class="st">&#39;x_coord&#39;</span>, y<span class="op">=</span><span class="st">&#39;y_coord&#39;</span>, c<span class="op">=</span><span class="st">&#39;salesratio&#39;</span>, colormap<span class="op">=</span><span class="st">&#39;inferno&#39;</span>, figsize<span class="op">=</span>(<span class="dv">20</span>,<span class="dv">10</span>), title<span class="op">=</span><span class="st">&#39;Sales Ratio by Location&#39;</span>, s<span class="op">=</span><span class="dv">50</span>)</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;x_coord&#39;</span>)</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;y_coord&#39;</span>)</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<div id="7bfd8acb" class="cell code">
+<div class="sourceCode" id="cb32"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creates a scatter plot of x_coord vs y_coord, where the color of the points is determined by the salesratio</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>df_merge.plot.scatter(x<span class="op">=</span><span class="st">&#39;x_coord&#39;</span>, y<span class="op">=</span><span class="st">&#39;y_coord&#39;</span>, c<span class="op">=</span><span class="st">&#39;salesratio&#39;</span>, colormap<span class="op">=</span><span class="st">&#39;inferno&#39;</span>, figsize<span class="op">=</span>(<span class="dv">20</span>,<span class="dv">10</span>), title<span class="op">=</span><span class="st">&#39;Sales Ratio by Location&#39;</span>, s<span class="op">=</span><span class="dv">50</span>)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;x_coord&#39;</span>)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;y_coord&#39;</span>)</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
 <div class="output display_data">
 <p><img
-src="vertopal_31db626cf60f4e4a9ac6e5c0803b2f47/650d30c18705f7bc73f71a33099dd6d1787e0e3e.png"
+src="vertopal_1a7841c621db4f89a322eb173a598744/650d30c18705f7bc73f71a33099dd6d1787e0e3e.png"
 width="2000" height="1000" /></p>
 </div>
 </div>
@@ -42952,25 +43068,25 @@ examine this relationship? We can plot the unemployment rates in
 relationship to the sales ratio and try to observe a relationship
 between the two.</p>
 </div>
-<div id="7bfd8acb" class="cell code" data-execution_count="96">
-<div class="sourceCode" id="cb31"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># unemployment rate vs sales ratio labels</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">10</span>))</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&quot;Unemployment Rate vs Sales ratio&quot;</span>)</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;Unemployment Rate (%)&quot;</span>)</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&quot;Sales Ratio&quot;</span>)</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="co"># plot unemployment rate vs sales ratio in a scatter plot</span></span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>plt.scatter(df_merge[<span class="st">&#39;UnemploymentRate&#39;</span>], df_merge[<span class="st">&#39;salesratio&#39;</span>])</span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="co"># create a linear regression line and plot it</span></span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> np.polyfit(df_merge[<span class="st">&#39;UnemploymentRate&#39;</span>], df_merge[<span class="st">&#39;salesratio&#39;</span>], <span class="dv">1</span>)</span>
-<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> np.poly1d(z)</span>
-<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>plt.plot(df_merge[<span class="st">&#39;UnemploymentRate&#39;</span>],p(df_merge[<span class="st">&#39;UnemploymentRate&#39;</span>]),<span class="st">&quot;r&quot;</span>)</span>
-<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<div id="7bfd8acb" class="cell code">
+<div class="sourceCode" id="cb33"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># unemployment rate vs sales ratio labels</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">10</span>))</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&quot;Unemployment Rate vs Sales ratio&quot;</span>)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;Unemployment Rate (%)&quot;</span>)</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&quot;Sales Ratio&quot;</span>)</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="co"># plot unemployment rate vs sales ratio in a scatter plot</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>plt.scatter(df_merge[<span class="st">&#39;UnemploymentRate&#39;</span>], df_merge[<span class="st">&#39;salesratio&#39;</span>])</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="co"># create a linear regression line and plot it</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> np.polyfit(df_merge[<span class="st">&#39;UnemploymentRate&#39;</span>], df_merge[<span class="st">&#39;salesratio&#39;</span>], <span class="dv">1</span>)</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> np.poly1d(z)</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>plt.plot(df_merge[<span class="st">&#39;UnemploymentRate&#39;</span>],p(df_merge[<span class="st">&#39;UnemploymentRate&#39;</span>]),<span class="st">&quot;r&quot;</span>)</span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
 <div class="output display_data">
 <p><img
-src="vertopal_31db626cf60f4e4a9ac6e5c0803b2f47/6f1b85408911c06e9dac8d43e56e6b7035d377c3.png"
+src="vertopal_1a7841c621db4f89a322eb173a598744/6f1b85408911c06e9dac8d43e56e6b7035d377c3.png"
 width="2000" height="1000" /></p>
 </div>
 </div>
@@ -42982,23 +43098,23 @@ This is highlighted in the linear regression line because there is a
 clear positive slope in the line. Thus we have established that there is
 a slight positive correlation between these two variables.</p>
 </div>
-<div id="9e6c6ad2" class="cell code" data-execution_count="97">
-<div class="sourceCode" id="cb32"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get a copy of the dataframe</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df_merge.copy()</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># cast type of unemployment rate to object</span></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;UnemploymentRate&#39;</span>] <span class="op">=</span> df[<span class="st">&#39;UnemploymentRate&#39;</span>].astype(<span class="bu">object</span>)</span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="co"># create a violin plot of the points for each discrete unemployment rate</span></span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>ggplot(data<span class="op">=</span>df, mapping<span class="op">=</span>aes(x<span class="op">=</span><span class="st">&#39;UnemploymentRate&#39;</span>, y<span class="op">=</span><span class="st">&#39;salesratio&#39;</span>)) <span class="op">+\</span></span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>geom_violin() <span class="op">+\</span></span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>labs(title<span class="op">=</span><span class="st">&quot;Unemployment Rate vs. Sales Ratio&quot;</span>,</span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>     x <span class="op">=</span> <span class="st">&quot;Unemployment Rate&quot;</span>,</span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>     y <span class="op">=</span> <span class="st">&quot;Sales Ratio&quot;</span>),</span></code></pre></div>
+<div id="9e6c6ad2" class="cell code">
+<div class="sourceCode" id="cb34"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get a copy of the dataframe</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df_merge.copy()</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co"># cast type of unemployment rate to object</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;UnemploymentRate&#39;</span>] <span class="op">=</span> df[<span class="st">&#39;UnemploymentRate&#39;</span>].astype(<span class="bu">object</span>)</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="co"># create a violin plot of the points for each discrete unemployment rate</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>ggplot(data<span class="op">=</span>df, mapping<span class="op">=</span>aes(x<span class="op">=</span><span class="st">&#39;UnemploymentRate&#39;</span>, y<span class="op">=</span><span class="st">&#39;salesratio&#39;</span>)) <span class="op">+\</span></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>geom_violin() <span class="op">+\</span></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>labs(title<span class="op">=</span><span class="st">&quot;Unemployment Rate vs. Sales Ratio&quot;</span>,</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>     x <span class="op">=</span> <span class="st">&quot;Unemployment Rate&quot;</span>,</span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>     y <span class="op">=</span> <span class="st">&quot;Sales Ratio&quot;</span>),</span></code></pre></div>
 <div class="output display_data">
 <p><img
-src="vertopal_31db626cf60f4e4a9ac6e5c0803b2f47/0f891e86d617c117382c4f3ca6576b352f0ff05d.png"
+src="vertopal_1a7841c621db4f89a322eb173a598744/0f891e86d617c117382c4f3ca6576b352f0ff05d.png"
 width="640" height="480" /></p>
 </div>
 <div class="output execute_result" data-execution_count="97">
@@ -43011,25 +43127,25 @@ estate sales. So if we make a scatter plot of the relationship between
 interest rate and real estate, we can better observe what sort of
 relationship exists between the two by observing overall trends.</p>
 </div>
-<div id="45fb5b75" class="cell code" data-execution_count="98">
-<div class="sourceCode" id="cb34"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot interest rate vs sales ratio</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">10</span>))</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&quot;Interest Rate vs Sales ratio&quot;</span>)</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;Interest Rate (%)&quot;</span>)</span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&quot;Sales Ratio&quot;</span>)</span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="co"># create a scatter plot</span></span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>plt.scatter(df_merge[<span class="st">&#39;primeRate&#39;</span>], df_merge[<span class="st">&#39;salesratio&#39;</span>])</span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="co"># create a linear regression line </span></span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> np.polyfit(df_merge[<span class="st">&#39;primeRate&#39;</span>], df_merge[<span class="st">&#39;salesratio&#39;</span>], <span class="dv">1</span>)</span>
-<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> np.poly1d(z)</span>
-<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>plt.plot(df_merge[<span class="st">&#39;primeRate&#39;</span>],p(df_merge[<span class="st">&#39;primeRate&#39;</span>]),<span class="st">&quot;r&quot;</span>)</span>
-<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<div id="45fb5b75" class="cell code">
+<div class="sourceCode" id="cb36"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot interest rate vs sales ratio</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">10</span>))</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&quot;Interest Rate vs Sales ratio&quot;</span>)</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;Interest Rate (%)&quot;</span>)</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&quot;Sales Ratio&quot;</span>)</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="co"># create a scatter plot</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>plt.scatter(df_merge[<span class="st">&#39;primeRate&#39;</span>], df_merge[<span class="st">&#39;salesratio&#39;</span>])</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="co"># create a linear regression line </span></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> np.polyfit(df_merge[<span class="st">&#39;primeRate&#39;</span>], df_merge[<span class="st">&#39;salesratio&#39;</span>], <span class="dv">1</span>)</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> np.poly1d(z)</span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>plt.plot(df_merge[<span class="st">&#39;primeRate&#39;</span>],p(df_merge[<span class="st">&#39;primeRate&#39;</span>]),<span class="st">&quot;r&quot;</span>)</span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
 <div class="output display_data">
 <p><img
-src="vertopal_31db626cf60f4e4a9ac6e5c0803b2f47/da325d049735fcdbe7bfab3b49aeaaff9fc31be3.png"
+src="vertopal_1a7841c621db4f89a322eb173a598744/da325d049735fcdbe7bfab3b49aeaaff9fc31be3.png"
 width="2000" height="1000" /></p>
 </div>
 </div>
@@ -43041,23 +43157,23 @@ linear regression line. A good majority of the points appear a distance
 away from the linear regression line and the points are all spread out
 in very similar ranges for each discrete interest rate.</p>
 </div>
-<div id="545e9036" class="cell code" data-execution_count="99">
-<div class="sourceCode" id="cb35"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make a copy of the dataframe</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df_merge.copy()</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co"># cast type to object</span></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;primeRate&#39;</span>] <span class="op">=</span> df[<span class="st">&#39;primeRate&#39;</span>].astype(<span class="bu">object</span>)</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="co"># make violin plot of interest rate vs sales ratio</span></span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>ggplot(data<span class="op">=</span>df, mapping<span class="op">=</span>aes(x<span class="op">=</span><span class="st">&#39;primeRate&#39;</span>, y<span class="op">=</span><span class="st">&#39;salesratio&#39;</span>)) <span class="op">+\</span></span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>geom_violin() <span class="op">+\</span></span>
-<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>labs(title<span class="op">=</span><span class="st">&quot;Interest Rate vs. Sales ratio&quot;</span>,</span>
-<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>     x <span class="op">=</span> <span class="st">&quot;Interest Rate&quot;</span>,</span>
-<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>     y <span class="op">=</span> <span class="st">&quot;Sales Ratio&quot;</span>) </span></code></pre></div>
+<div id="545e9036" class="cell code">
+<div class="sourceCode" id="cb37"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make a copy of the dataframe</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df_merge.copy()</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="co"># cast type to object</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;primeRate&#39;</span>] <span class="op">=</span> df[<span class="st">&#39;primeRate&#39;</span>].astype(<span class="bu">object</span>)</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="co"># make violin plot of interest rate vs sales ratio</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>ggplot(data<span class="op">=</span>df, mapping<span class="op">=</span>aes(x<span class="op">=</span><span class="st">&#39;primeRate&#39;</span>, y<span class="op">=</span><span class="st">&#39;salesratio&#39;</span>)) <span class="op">+\</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>geom_violin() <span class="op">+\</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>labs(title<span class="op">=</span><span class="st">&quot;Interest Rate vs. Sales ratio&quot;</span>,</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>     x <span class="op">=</span> <span class="st">&quot;Interest Rate&quot;</span>,</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>     y <span class="op">=</span> <span class="st">&quot;Sales Ratio&quot;</span>) </span></code></pre></div>
 <div class="output display_data">
 <p><img
-src="vertopal_31db626cf60f4e4a9ac6e5c0803b2f47/a411f731c16696ac5e16d0131bfed7cd0857bbef.png"
+src="vertopal_1a7841c621db4f89a322eb173a598744/a411f731c16696ac5e16d0131bfed7cd0857bbef.png"
 width="640" height="480" /></p>
 </div>
 <div class="output execute_result" data-execution_count="99">
@@ -43071,26 +43187,26 @@ across the interest rates and it does seem to clearly indicate that the
 bulk of the points seem to shift downwards as the interest rates
 decrease.</p>
 </div>
-<div id="c71a2f12" class="cell code" data-execution_count="100">
-<div class="sourceCode" id="cb37"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>salesR_df <span class="op">=</span>  df</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>salesR_df[<span class="st">&#39;month&#39;</span>] <span class="op">=</span> pd.DatetimeIndex(salesR_df[<span class="st">&#39;daterecorded&#39;</span>]).month</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>salesR_df <span class="op">=</span> salesR_df[[<span class="st">&#39;salesratio&#39;</span>,<span class="st">&#39;month&#39;</span>]]</span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> salesR_df[[<span class="st">&#39;month&#39;</span>]]</span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> salesR_df[[<span class="st">&#39;salesratio&#39;</span>]]</span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>sns.violinplot(x<span class="op">=</span><span class="st">&#39;month&#39;</span>,y<span class="op">=</span><span class="st">&#39;salesratio&#39;</span>, data<span class="op">=</span>salesR_df)</span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&quot;Sales Ratio vs Month Violin Plot&quot;</span>)</span>
-<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Month&#39;</span>)</span>
-<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Sales Ratio&#39;</span>)</span></code></pre></div>
+<div id="c71a2f12" class="cell code">
+<div class="sourceCode" id="cb39"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>salesR_df <span class="op">=</span>  df</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>salesR_df[<span class="st">&#39;month&#39;</span>] <span class="op">=</span> pd.DatetimeIndex(salesR_df[<span class="st">&#39;daterecorded&#39;</span>]).month</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>salesR_df <span class="op">=</span> salesR_df[[<span class="st">&#39;salesratio&#39;</span>,<span class="st">&#39;month&#39;</span>]]</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> salesR_df[[<span class="st">&#39;month&#39;</span>]]</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> salesR_df[[<span class="st">&#39;salesratio&#39;</span>]]</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>sns.violinplot(x<span class="op">=</span><span class="st">&#39;month&#39;</span>,y<span class="op">=</span><span class="st">&#39;salesratio&#39;</span>, data<span class="op">=</span>salesR_df)</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&quot;Sales Ratio vs Month Violin Plot&quot;</span>)</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Month&#39;</span>)</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Sales Ratio&#39;</span>)</span></code></pre></div>
 <div class="output execute_result" data-execution_count="100">
 <pre><code>Text(0, 0.5, &#39;Sales Ratio&#39;)</code></pre>
 </div>
 <div class="output display_data">
 <p><img
-src="vertopal_31db626cf60f4e4a9ac6e5c0803b2f47/308cab3996743ef45ffbadb85b92730347f93847.png"
+src="vertopal_1a7841c621db4f89a322eb173a598744/308cab3996743ef45ffbadb85b92730347f93847.png"
 width="640" height="480" /></p>
 </div>
 </div>
@@ -43128,11 +43244,11 @@ rate.</p>
 <p>Let's figure out if we should reject the null hypothesis and accept
 the alternative hypothesis!</p>
 </div>
-<div id="c6fc35cf" class="cell code" data-execution_count="102">
-<div class="sourceCode" id="cb39"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> smf.ols(formula<span class="op">=</span><span class="st">&quot;salesratio ~ UnemploymentRate&quot;</span>, data<span class="op">=</span>df_merge).fit()</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>model.summary()</span></code></pre></div>
+<div id="c6fc35cf" class="cell code">
+<div class="sourceCode" id="cb41"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> smf.ols(formula<span class="op">=</span><span class="st">&quot;salesratio ~ UnemploymentRate&quot;</span>, data<span class="op">=</span>df_merge).fit()</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>model.summary()</span></code></pre></div>
 <div class="output execute_result" data-execution_count="102">
 <table class="simpletable">
 <caption>OLS Regression Results</caption>
@@ -43207,11 +43323,11 @@ rate.</p>
 <p>Let's figure out if we should reject the null hypothesis and accept
 the alternative hypothesis!</p>
 </div>
-<div id="df7e8d31" class="cell code" data-execution_count="103">
-<div class="sourceCode" id="cb40"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> smf.ols(formula<span class="op">=</span><span class="st">&quot;salesratio ~ primeRate&quot;</span>, data<span class="op">=</span>df_merge).fit()</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>model.summary()</span></code></pre></div>
+<div id="df7e8d31" class="cell code">
+<div class="sourceCode" id="cb42"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> smf.ols(formula<span class="op">=</span><span class="st">&quot;salesratio ~ primeRate&quot;</span>, data<span class="op">=</span>df_merge).fit()</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>model.summary()</span></code></pre></div>
 <div class="output execute_result" data-execution_count="103">
 <table class="simpletable">
 <caption>OLS Regression Results</caption>
@@ -43299,20 +43415,20 @@ into number values. Learn more about data preprocessing using scikit
 learn <a
 href="https://scikit-learn.org/stable/modules/preprocessing.html">here</a>.</p>
 </div>
-<div id="3a9c29db" class="cell code" data-execution_count="104">
-<div class="sourceCode" id="cb41"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># use scikit-learn&#39;s label encoder</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>le <span class="op">=</span> preprocessing.LabelEncoder()</span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="co"># encode the towns column of df_merge into integers</span></span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>le.fit(df_merge[<span class="st">&#39;town&#39;</span>])</span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>df_merge[<span class="st">&#39;town&#39;</span>] <span class="op">=</span> le.transform(df_merge[<span class="st">&#39;town&#39;</span>])</span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="co"># encode the residential type values into integers</span></span>
-<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>le.fit(df_merge[<span class="st">&#39;residentialtype&#39;</span>])</span>
-<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>df_merge[<span class="st">&#39;residentialtype&#39;</span>] <span class="op">=</span> le.transform(df_merge[<span class="st">&#39;residentialtype&#39;</span>])</span>
-<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>df_merge</span></code></pre></div>
+<div id="3a9c29db" class="cell code">
+<div class="sourceCode" id="cb43"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># use scikit-learn&#39;s label encoder</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>le <span class="op">=</span> preprocessing.LabelEncoder()</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="co"># encode the towns column of df_merge into integers</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>le.fit(df_merge[<span class="st">&#39;town&#39;</span>])</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>df_merge[<span class="st">&#39;town&#39;</span>] <span class="op">=</span> le.transform(df_merge[<span class="st">&#39;town&#39;</span>])</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="co"># encode the residential type values into integers</span></span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>le.fit(df_merge[<span class="st">&#39;residentialtype&#39;</span>])</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>df_merge[<span class="st">&#39;residentialtype&#39;</span>] <span class="op">=</span> le.transform(df_merge[<span class="st">&#39;residentialtype&#39;</span>])</span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>df_merge</span></code></pre></div>
 <div class="output execute_result" data-execution_count="104">
 <div>
 <style scoped>
@@ -43570,15 +43686,15 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb41-1"><a h
 <p>The next step is to take only the features that we want to examine
 and create a dataframe out of only the relevant data.</p>
 </div>
-<div id="0b711abf" class="cell code" data-execution_count="105">
-<div class="sourceCode" id="cb42"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># take the columns that we are using for the datset</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>relevant_cols <span class="op">=</span> df_merge[[<span class="st">&#39;salesratio&#39;</span>, <span class="st">&#39;UnemploymentRate&#39;</span>, <span class="st">&#39;primeRate&#39;</span>, <span class="st">&#39;town&#39;</span>, <span class="st">&#39;residentialtype&#39;</span>]]</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>relevant_cols <span class="op">=</span> relevant_cols.dropna(subset<span class="op">=</span>[<span class="st">&#39;salesratio&#39;</span>, <span class="st">&#39;UnemploymentRate&#39;</span>, <span class="st">&#39;primeRate&#39;</span>, <span class="st">&#39;town&#39;</span>, <span class="st">&#39;residentialtype&#39;</span>])</span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="co"># combine all sales ratio, unemployment rate, and interest rate grouped by year for better visualization</span></span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>ml_df <span class="op">=</span> relevant_cols[[<span class="st">&#39;UnemploymentRate&#39;</span>, <span class="st">&#39;primeRate&#39;</span>, <span class="st">&#39;town&#39;</span>, <span class="st">&#39;residentialtype&#39;</span>, <span class="st">&#39;salesratio&#39;</span>]].groupby(by<span class="op">=</span>[<span class="st">&#39;town&#39;</span>], as_index<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>ml_df.head(<span class="dv">10</span>)</span></code></pre></div>
+<div id="0b711abf" class="cell code">
+<div class="sourceCode" id="cb44"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># take the columns that we are using for the datset</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>relevant_cols <span class="op">=</span> df_merge[[<span class="st">&#39;salesratio&#39;</span>, <span class="st">&#39;UnemploymentRate&#39;</span>, <span class="st">&#39;primeRate&#39;</span>, <span class="st">&#39;town&#39;</span>, <span class="st">&#39;residentialtype&#39;</span>]]</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>relevant_cols <span class="op">=</span> relevant_cols.dropna(subset<span class="op">=</span>[<span class="st">&#39;salesratio&#39;</span>, <span class="st">&#39;UnemploymentRate&#39;</span>, <span class="st">&#39;primeRate&#39;</span>, <span class="st">&#39;town&#39;</span>, <span class="st">&#39;residentialtype&#39;</span>])</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="co"># combine all sales ratio, unemployment rate, and interest rate grouped by year for better visualization</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>ml_df <span class="op">=</span> relevant_cols[[<span class="st">&#39;UnemploymentRate&#39;</span>, <span class="st">&#39;primeRate&#39;</span>, <span class="st">&#39;town&#39;</span>, <span class="st">&#39;residentialtype&#39;</span>, <span class="st">&#39;salesratio&#39;</span>]].groupby(by<span class="op">=</span>[<span class="st">&#39;town&#39;</span>], as_index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>ml_df.head(<span class="dv">10</span>)</span></code></pre></div>
 <div class="output execute_result" data-execution_count="105">
 <div>
 <style scoped>
@@ -43705,73 +43821,15 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb42-1"><a h
 data. We can start to work on building the models. To start off, we are
 going to create a linear regression model.</p>
 </div>
-<div id="2fd9c7cf" class="cell code" data-execution_count="106">
-<div class="sourceCode" id="cb43"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># function for modeling with linear regression</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> modelLinReg(X, Y):</span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># split the data into training/testing sets</span></span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  X_train, X_test, Y_train, Y_test <span class="op">=</span> train_test_split(X, Y, test_size<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># create linear regression object</span></span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>  model <span class="op">=</span> linear_model.LinearRegression()</span>
-<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># train the model using the training sets</span></span>
-<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>  model.fit(X_train, Y_train)</span>
-<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># make predictions using the testing set</span></span>
-<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>  Y_pred <span class="op">=</span> model.predict(X_test)</span>
-<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&#39;Ordinary Least Squares (OLS)&#39;</span>)</span>
-<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&#39;Coefficients: &#39;</span>, model.coef_[<span class="dv">0</span>])</span>
-<span id="cb43-17"><a href="#cb43-17" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&#39;Intercept: &#39;</span>, model.intercept_)</span>
-<span id="cb43-18"><a href="#cb43-18" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&#39;Mean squared error: </span><span class="sc">%.2f</span><span class="st">&#39;</span></span>
-<span id="cb43-19"><a href="#cb43-19" aria-hidden="true" tabindex="-1"></a>        <span class="op">%</span> mean_squared_error(Y_test, Y_pred))</span>
-<span id="cb43-20"><a href="#cb43-20" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&#39;Coefficient of determination: </span><span class="sc">%.2f</span><span class="st">&#39;</span></span>
-<span id="cb43-21"><a href="#cb43-21" aria-hidden="true" tabindex="-1"></a>        <span class="op">%</span> r2_score(Y_test, Y_pred))</span></code></pre></div>
-</div>
-<div id="e3e31ba9" class="cell markdown">
-<p>Next we are creating a <a
-href="https://www.mygreatlearning.com/blog/what-is-ridge-regression/">ridge
-regression model</a>.</p>
-</div>
-<div id="8d25f523" class="cell code" data-execution_count="107">
-<div class="sourceCode" id="cb44"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># function for modeling with ridge regression</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> modelRidgeReg(X, Y):</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># split the data into training/testing sets</span></span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  X_train, X_test, Y_train, Y_test <span class="op">=</span> train_test_split(X, Y, test_size<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># create linear regression object</span></span>
-<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>  model <span class="op">=</span> linear_model.Ridge(alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
-<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># train the model using the training sets</span></span>
-<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>  model.fit(X_train, Y_train)</span>
-<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># make predictions using the testing set</span></span>
-<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>  Y_pred <span class="op">=</span> model.predict(X_test)</span>
-<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&#39;Ridge Regression&#39;</span>)</span>
-<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&#39;Coefficients: &#39;</span>, model.coef_[<span class="dv">0</span>])</span>
-<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&#39;Intercept: &#39;</span>, model.intercept_)</span>
-<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&#39;Mean squared error: </span><span class="sc">%.2f</span><span class="st">&#39;</span></span>
-<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>        <span class="op">%</span> mean_squared_error(Y_test, Y_pred))</span>
-<span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&#39;Coefficient of determination: </span><span class="sc">%.2f</span><span class="st">&#39;</span></span>
-<span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a>        <span class="op">%</span> r2_score(Y_test, Y_pred))</span></code></pre></div>
-</div>
-<div id="c6046ba4" class="cell markdown">
-<p>Then here is a <a
-href="https://www.mygreatlearning.com/blog/understanding-of-lasso-regression/#:~:text=Lasso%20regression%20is%20a%20regularization,i.e.%20models%20with%20fewer%20parameters">lasso
-regression model</a>.</p>
-</div>
-<div id="716cf405" class="cell code" data-execution_count="108">
+<div id="2fd9c7cf" class="cell code">
 <div class="sourceCode" id="cb45"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># function for modeling with lasso regression</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> modelLassoReg(X, Y):</span>
+class="sourceCode python"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># function for modeling with linear regression</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> modelLinReg(X, Y):</span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># split the data into training/testing sets</span></span>
 <span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>  X_train, X_test, Y_train, Y_test <span class="op">=</span> train_test_split(X, Y, test_size<span class="op">=</span><span class="fl">0.3</span>)</span>
 <span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># create linear regression object</span></span>
-<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>  model <span class="op">=</span> linear_model.Lasso(alpha<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>  model <span class="op">=</span> linear_model.LinearRegression()</span>
 <span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># train the model using the training sets</span></span>
 <span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>  model.fit(X_train, Y_train)</span>
@@ -43779,7 +43837,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb45-1"><a h
 <span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># make predictions using the testing set</span></span>
 <span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>  Y_pred <span class="op">=</span> model.predict(X_test)</span>
 <span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&#39;Lasso Regression&#39;</span>)</span>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&#39;Ordinary Least Squares (OLS)&#39;</span>)</span>
 <span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&#39;Coefficients: &#39;</span>, model.coef_[<span class="dv">0</span>])</span>
 <span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&#39;Intercept: &#39;</span>, model.intercept_)</span>
 <span id="cb45-18"><a href="#cb45-18" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&#39;Mean squared error: </span><span class="sc">%.2f</span><span class="st">&#39;</span></span>
@@ -43787,20 +43845,20 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb45-1"><a h
 <span id="cb45-20"><a href="#cb45-20" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&#39;Coefficient of determination: </span><span class="sc">%.2f</span><span class="st">&#39;</span></span>
 <span id="cb45-21"><a href="#cb45-21" aria-hidden="true" tabindex="-1"></a>        <span class="op">%</span> r2_score(Y_test, Y_pred))</span></code></pre></div>
 </div>
-<div id="b46e22a7" class="cell markdown">
-<p>And finally an <a
-href="https://machinelearningcompass.com/machine_learning_models/elastic_net_regression/">elastic
-net regression model</a>.</p>
+<div id="e3e31ba9" class="cell markdown">
+<p>Next we are creating a <a
+href="https://www.mygreatlearning.com/blog/what-is-ridge-regression/">ridge
+regression model</a>.</p>
 </div>
-<div id="1dbdd715" class="cell code" data-execution_count="109">
+<div id="8d25f523" class="cell code">
 <div class="sourceCode" id="cb46"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># function for modeling with elastic net regression</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> modelElasticNetReg(X, Y):</span>
+class="sourceCode python"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># function for modeling with ridge regression</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> modelRidgeReg(X, Y):</span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># split the data into training/testing sets</span></span>
 <span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  X_train, X_test, Y_train, Y_test <span class="op">=</span> train_test_split(X, Y, test_size<span class="op">=</span><span class="fl">0.3</span>)</span>
 <span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># create linear regression object</span></span>
-<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>  model <span class="op">=</span> linear_model.ElasticNet(alpha<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>  model <span class="op">=</span> linear_model.Ridge(alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
 <span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># train the model using the training sets</span></span>
 <span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>  model.fit(X_train, Y_train)</span>
@@ -43808,7 +43866,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb46-1"><a h
 <span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># make predictions using the testing set</span></span>
 <span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a>  Y_pred <span class="op">=</span> model.predict(X_test)</span>
 <span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-15"><a href="#cb46-15" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&#39;Elastic Net Regression&#39;</span>)</span>
+<span id="cb46-15"><a href="#cb46-15" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&#39;Ridge Regression&#39;</span>)</span>
 <span id="cb46-16"><a href="#cb46-16" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&#39;Coefficients: &#39;</span>, model.coef_[<span class="dv">0</span>])</span>
 <span id="cb46-17"><a href="#cb46-17" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&#39;Intercept: &#39;</span>, model.intercept_)</span>
 <span id="cb46-18"><a href="#cb46-18" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&#39;Mean squared error: </span><span class="sc">%.2f</span><span class="st">&#39;</span></span>
@@ -43816,27 +43874,85 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb46-1"><a h
 <span id="cb46-20"><a href="#cb46-20" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&#39;Coefficient of determination: </span><span class="sc">%.2f</span><span class="st">&#39;</span></span>
 <span id="cb46-21"><a href="#cb46-21" aria-hidden="true" tabindex="-1"></a>        <span class="op">%</span> r2_score(Y_test, Y_pred))</span></code></pre></div>
 </div>
+<div id="c6046ba4" class="cell markdown">
+<p>Then here is a <a
+href="https://www.mygreatlearning.com/blog/understanding-of-lasso-regression/#:~:text=Lasso%20regression%20is%20a%20regularization,i.e.%20models%20with%20fewer%20parameters">lasso
+regression model</a>.</p>
+</div>
+<div id="716cf405" class="cell code">
+<div class="sourceCode" id="cb47"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># function for modeling with lasso regression</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> modelLassoReg(X, Y):</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># split the data into training/testing sets</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>  X_train, X_test, Y_train, Y_test <span class="op">=</span> train_test_split(X, Y, test_size<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># create linear regression object</span></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>  model <span class="op">=</span> linear_model.Lasso(alpha<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># train the model using the training sets</span></span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>  model.fit(X_train, Y_train)</span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># make predictions using the testing set</span></span>
+<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a>  Y_pred <span class="op">=</span> model.predict(X_test)</span>
+<span id="cb47-14"><a href="#cb47-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-15"><a href="#cb47-15" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&#39;Lasso Regression&#39;</span>)</span>
+<span id="cb47-16"><a href="#cb47-16" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&#39;Coefficients: &#39;</span>, model.coef_[<span class="dv">0</span>])</span>
+<span id="cb47-17"><a href="#cb47-17" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&#39;Intercept: &#39;</span>, model.intercept_)</span>
+<span id="cb47-18"><a href="#cb47-18" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&#39;Mean squared error: </span><span class="sc">%.2f</span><span class="st">&#39;</span></span>
+<span id="cb47-19"><a href="#cb47-19" aria-hidden="true" tabindex="-1"></a>        <span class="op">%</span> mean_squared_error(Y_test, Y_pred))</span>
+<span id="cb47-20"><a href="#cb47-20" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&#39;Coefficient of determination: </span><span class="sc">%.2f</span><span class="st">&#39;</span></span>
+<span id="cb47-21"><a href="#cb47-21" aria-hidden="true" tabindex="-1"></a>        <span class="op">%</span> r2_score(Y_test, Y_pred))</span></code></pre></div>
+</div>
+<div id="b46e22a7" class="cell markdown">
+<p>And finally an <a
+href="https://machinelearningcompass.com/machine_learning_models/elastic_net_regression/">elastic
+net regression model</a>.</p>
+</div>
+<div id="1dbdd715" class="cell code">
+<div class="sourceCode" id="cb48"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># function for modeling with elastic net regression</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> modelElasticNetReg(X, Y):</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># split the data into training/testing sets</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>  X_train, X_test, Y_train, Y_test <span class="op">=</span> train_test_split(X, Y, test_size<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># create linear regression object</span></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>  model <span class="op">=</span> linear_model.ElasticNet(alpha<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># train the model using the training sets</span></span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>  model.fit(X_train, Y_train)</span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># make predictions using the testing set</span></span>
+<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a>  Y_pred <span class="op">=</span> model.predict(X_test)</span>
+<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&#39;Elastic Net Regression&#39;</span>)</span>
+<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&#39;Coefficients: &#39;</span>, model.coef_[<span class="dv">0</span>])</span>
+<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&#39;Intercept: &#39;</span>, model.intercept_)</span>
+<span id="cb48-18"><a href="#cb48-18" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&#39;Mean squared error: </span><span class="sc">%.2f</span><span class="st">&#39;</span></span>
+<span id="cb48-19"><a href="#cb48-19" aria-hidden="true" tabindex="-1"></a>        <span class="op">%</span> mean_squared_error(Y_test, Y_pred))</span>
+<span id="cb48-20"><a href="#cb48-20" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&#39;Coefficient of determination: </span><span class="sc">%.2f</span><span class="st">&#39;</span></span>
+<span id="cb48-21"><a href="#cb48-21" aria-hidden="true" tabindex="-1"></a>        <span class="op">%</span> r2_score(Y_test, Y_pred))</span></code></pre></div>
+</div>
 <div id="d70fff9c" class="cell markdown">
 <p>Once we have created the functions to build our models, we can begin
 passing in our dataset in order to train the model.</p>
 </div>
-<div id="dc3c20ee" class="cell code" data-execution_count="110">
-<div class="sourceCode" id="cb47"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># isolate x and y values for modeling</span></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.array(df_merge[[<span class="st">&#39;UnemploymentRate&#39;</span>, <span class="st">&#39;primeRate&#39;</span>, <span class="st">&#39;residentialtype&#39;</span>, <span class="st">&#39;town&#39;</span>]])</span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> np.array(df_merge[[<span class="st">&#39;salesratio&#39;</span>]])</span>
-<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>modelLinReg(X, Y)</span>
-<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>modelRidgeReg(X, Y)</span>
-<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a>modelLassoReg(X, Y)</span>
-<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-14"><a href="#cb47-14" aria-hidden="true" tabindex="-1"></a>modelElasticNetReg(X, Y)</span>
-<span id="cb47-15"><a href="#cb47-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div id="dc3c20ee" class="cell code">
+<div class="sourceCode" id="cb49"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># isolate x and y values for modeling</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.array(df_merge[[<span class="st">&#39;UnemploymentRate&#39;</span>, <span class="st">&#39;primeRate&#39;</span>, <span class="st">&#39;residentialtype&#39;</span>, <span class="st">&#39;town&#39;</span>]])</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> np.array(df_merge[[<span class="st">&#39;salesratio&#39;</span>]])</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>modelLinReg(X, Y)</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>modelRidgeReg(X, Y)</span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>modelLassoReg(X, Y)</span>
+<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a>modelElasticNetReg(X, Y)</span>
+<span id="cb49-15"><a href="#cb49-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <div class="output stream stdout">
 <pre><code>Ordinary Least Squares (OLS)
 Coefficients:  [ 6.79206123e-03 -2.15448492e-02 -3.47757121e-02 -1.96736428e-05]
@@ -43881,24 +43997,24 @@ indicating that the linear regression model is the best fitted model,
 out of all the models we have explored, for predicting sales ratio
 values.</p>
 </div>
-<div id="f567f9a3" class="cell code" data-execution_count="111">
-<div class="sourceCode" id="cb49"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="co"># create a sns pairplot of all variables vs each other</span></span>
-<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>sns.pairplot(df_merge[[<span class="st">&#39;salesratio&#39;</span>, <span class="st">&#39;UnemploymentRate&#39;</span>, <span class="st">&#39;primeRate&#39;</span>, <span class="st">&#39;town&#39;</span>, <span class="st">&#39;residentialtype&#39;</span>]], markers<span class="op">=</span><span class="st">&quot;.&quot;</span>)</span>
-<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<div id="f567f9a3" class="cell code">
+<div class="sourceCode" id="cb51"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="co"># create a sns pairplot of all variables vs each other</span></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>sns.pairplot(df_merge[[<span class="st">&#39;salesratio&#39;</span>, <span class="st">&#39;UnemploymentRate&#39;</span>, <span class="st">&#39;primeRate&#39;</span>, <span class="st">&#39;town&#39;</span>, <span class="st">&#39;residentialtype&#39;</span>]], markers<span class="op">=</span><span class="st">&quot;.&quot;</span>)</span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
 <div class="output display_data">
 <p><img
-src="vertopal_31db626cf60f4e4a9ac6e5c0803b2f47/af8c5d9a74a934ce782715f08ca0bb37c6ea43a4.png"
+src="vertopal_1a7841c621db4f89a322eb173a598744/af8c5d9a74a934ce782715f08ca0bb37c6ea43a4.png"
 width="1250" height="1250" /></p>
 </div>
 </div>
-<div id="051e2851" class="cell code" data-execution_count="112">
-<div class="sourceCode" id="cb50"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make a linear regression model for sales ratio = m1 * unemployment rate + m2 * prime rate + m3 * town + m4 * residential type + b</span></span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> smf.ols(formula<span class="op">=</span><span class="st">&quot;salesratio ~ UnemploymentRate + primeRate + town + residentialtype&quot;</span>, data<span class="op">=</span>df_merge).fit()</span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>model.summary()</span></code></pre></div>
+<div id="051e2851" class="cell code">
+<div class="sourceCode" id="cb52"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make a linear regression model for sales ratio = m1 * unemployment rate + m2 * prime rate + m3 * town + m4 * residential type + b</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> smf.ols(formula<span class="op">=</span><span class="st">&quot;salesratio ~ UnemploymentRate + primeRate + town + residentialtype&quot;</span>, data<span class="op">=</span>df_merge).fit()</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>model.summary()</span></code></pre></div>
 <div class="output execute_result" data-execution_count="112">
 <table class="simpletable">
 <caption>OLS Regression Results</caption>
@@ -44051,58 +44167,58 @@ them interesting enough to keep around down here (or maybe it's that we
 would miss them if they were deleted haha). Feel free to take a look,
 but again, they are not meant to be part of the above tutorial.</p>
 </div>
-<div id="e9acdbef" class="cell code" data-execution_count="113">
-<div class="sourceCode" id="cb51"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>res_type_df<span class="op">=</span> results_df.groupby(<span class="st">&#39;residentialtype&#39;</span>).first()</span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>res_type_df[<span class="st">&#39;COUNT&#39;</span>] <span class="op">=</span> results_df[<span class="st">&#39;residentialtype&#39;</span>].value_counts()</span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>res_type_df.reset_index(inplace<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>res_type_df<span class="op">=</span> res_type_df[[<span class="st">&#39;residentialtype&#39;</span>,<span class="st">&#39;COUNT&#39;</span>]]</span>
-<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(res_type_df[<span class="st">&#39;residentialtype&#39;</span>])</span>
-<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span>
-<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a><span class="co">data = res_type_df[&#39;COUNT&#39;].values.tolist()</span></span>
-<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a><span class="co">types = res_type_df[&#39;residentialtype&#39;].values.tolist()</span></span>
-<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a><span class="co">fig = plt.figure(figsize =(10, 7))</span></span>
-<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a><span class="co">plt.pie(data, labels = types)</span></span>
-<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a><span class="co"> </span></span>
-<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a><span class="co"># show plot</span></span>
-<span id="cb51-13"><a href="#cb51-13" aria-hidden="true" tabindex="-1"></a><span class="co">plt.show()&quot;&quot;&quot;</span></span>
-<span id="cb51-14"><a href="#cb51-14" aria-hidden="true" tabindex="-1"></a>explode <span class="op">=</span> (<span class="fl">0.1</span>, <span class="fl">0.0</span>, <span class="fl">0.2</span>, <span class="fl">0.4</span>, <span class="fl">0.2</span>)</span>
-<span id="cb51-15"><a href="#cb51-15" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb51-16"><a href="#cb51-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating color parameters</span></span>
-<span id="cb51-17"><a href="#cb51-17" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> ( <span class="st">&quot;khaki&quot;</span>, <span class="st">&quot;cyan&quot;</span>, <span class="st">&quot;mistyrose&quot;</span>,</span>
-<span id="cb51-18"><a href="#cb51-18" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;deepskyblue&quot;</span>, <span class="st">&quot;springgreen&quot;</span>)</span>
-<span id="cb51-19"><a href="#cb51-19" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> res_type_df[<span class="st">&#39;COUNT&#39;</span>].values.tolist()</span>
-<span id="cb51-20"><a href="#cb51-20" aria-hidden="true" tabindex="-1"></a>types <span class="op">=</span> res_type_df[<span class="st">&#39;residentialtype&#39;</span>].values.tolist()</span>
-<span id="cb51-21"><a href="#cb51-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-22"><a href="#cb51-22" aria-hidden="true" tabindex="-1"></a>wp <span class="op">=</span> { <span class="st">&#39;linewidth&#39;</span> : <span class="dv">1</span>, <span class="st">&#39;edgecolor&#39;</span> : <span class="st">&quot;green&quot;</span> }</span>
-<span id="cb51-23"><a href="#cb51-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-24"><a href="#cb51-24" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> func(pct, allvalues):</span>
-<span id="cb51-25"><a href="#cb51-25" aria-hidden="true" tabindex="-1"></a>    absolute <span class="op">=</span> <span class="bu">int</span>(pct <span class="op">/</span> <span class="fl">100.</span><span class="op">*</span>np.<span class="bu">sum</span>(allvalues))</span>
-<span id="cb51-26"><a href="#cb51-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">&quot;</span><span class="sc">{:.1f}</span><span class="st">%</span><span class="ch">\n</span><span class="st">(</span><span class="sc">{:d}</span><span class="st">)&quot;</span>.<span class="bu">format</span>(pct, absolute)</span>
-<span id="cb51-27"><a href="#cb51-27" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb51-28"><a href="#cb51-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating plot</span></span>
-<span id="cb51-29"><a href="#cb51-29" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize <span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>))</span>
-<span id="cb51-30"><a href="#cb51-30" aria-hidden="true" tabindex="-1"></a>wedges, texts, autotexts <span class="op">=</span> ax.pie(data,</span>
-<span id="cb51-31"><a href="#cb51-31" aria-hidden="true" tabindex="-1"></a>                                  autopct <span class="op">=</span> <span class="kw">lambda</span> pct: func(pct, data),</span>
-<span id="cb51-32"><a href="#cb51-32" aria-hidden="true" tabindex="-1"></a>                                  explode <span class="op">=</span> explode,</span>
-<span id="cb51-33"><a href="#cb51-33" aria-hidden="true" tabindex="-1"></a>                                  labels <span class="op">=</span> types,</span>
-<span id="cb51-34"><a href="#cb51-34" aria-hidden="true" tabindex="-1"></a>                                  shadow <span class="op">=</span> <span class="va">True</span>,</span>
-<span id="cb51-35"><a href="#cb51-35" aria-hidden="true" tabindex="-1"></a>                                  colors <span class="op">=</span> colors,</span>
-<span id="cb51-36"><a href="#cb51-36" aria-hidden="true" tabindex="-1"></a>                                  startangle <span class="op">=</span> <span class="dv">90</span>,</span>
-<span id="cb51-37"><a href="#cb51-37" aria-hidden="true" tabindex="-1"></a>                                  wedgeprops <span class="op">=</span> wp,</span>
-<span id="cb51-38"><a href="#cb51-38" aria-hidden="true" tabindex="-1"></a>                                  textprops <span class="op">=</span> <span class="bu">dict</span>(color <span class="op">=</span><span class="st">&quot;black&quot;</span>))</span>
-<span id="cb51-39"><a href="#cb51-39" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb51-40"><a href="#cb51-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Adding legend</span></span>
-<span id="cb51-41"><a href="#cb51-41" aria-hidden="true" tabindex="-1"></a>ax.legend(wedges, types,</span>
-<span id="cb51-42"><a href="#cb51-42" aria-hidden="true" tabindex="-1"></a>          title <span class="op">=</span><span class="st">&quot;Residential Types&quot;</span>,</span>
-<span id="cb51-43"><a href="#cb51-43" aria-hidden="true" tabindex="-1"></a>          loc <span class="op">=</span><span class="st">&quot;center left&quot;</span>,</span>
-<span id="cb51-44"><a href="#cb51-44" aria-hidden="true" tabindex="-1"></a>          bbox_to_anchor <span class="op">=</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">0.5</span>, <span class="dv">1</span>))</span>
-<span id="cb51-45"><a href="#cb51-45" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb51-46"><a href="#cb51-46" aria-hidden="true" tabindex="-1"></a>plt.setp(autotexts, size <span class="op">=</span> <span class="dv">8</span>, weight <span class="op">=</span><span class="st">&quot;bold&quot;</span>)</span>
-<span id="cb51-47"><a href="#cb51-47" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">&quot;Percentage of Residential Types for All Towns</span><span class="ch">\n\n\n</span><span class="st">&quot;</span>)</span>
-<span id="cb51-48"><a href="#cb51-48" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb51-49"><a href="#cb51-49" aria-hidden="true" tabindex="-1"></a><span class="co"># show plot</span></span>
-<span id="cb51-50"><a href="#cb51-50" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<div id="e9acdbef" class="cell code">
+<div class="sourceCode" id="cb53"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>res_type_df<span class="op">=</span> results_df.groupby(<span class="st">&#39;residentialtype&#39;</span>).first()</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>res_type_df[<span class="st">&#39;COUNT&#39;</span>] <span class="op">=</span> results_df[<span class="st">&#39;residentialtype&#39;</span>].value_counts()</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>res_type_df.reset_index(inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>res_type_df<span class="op">=</span> res_type_df[[<span class="st">&#39;residentialtype&#39;</span>,<span class="st">&#39;COUNT&#39;</span>]]</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(res_type_df[<span class="st">&#39;residentialtype&#39;</span>])</span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a><span class="co">data = res_type_df[&#39;COUNT&#39;].values.tolist()</span></span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a><span class="co">types = res_type_df[&#39;residentialtype&#39;].values.tolist()</span></span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a><span class="co">fig = plt.figure(figsize =(10, 7))</span></span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a><span class="co">plt.pie(data, labels = types)</span></span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a><span class="co"> </span></span>
+<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a><span class="co"># show plot</span></span>
+<span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a><span class="co">plt.show()&quot;&quot;&quot;</span></span>
+<span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a>explode <span class="op">=</span> (<span class="fl">0.1</span>, <span class="fl">0.0</span>, <span class="fl">0.2</span>, <span class="fl">0.4</span>, <span class="fl">0.2</span>)</span>
+<span id="cb53-15"><a href="#cb53-15" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb53-16"><a href="#cb53-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating color parameters</span></span>
+<span id="cb53-17"><a href="#cb53-17" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> ( <span class="st">&quot;khaki&quot;</span>, <span class="st">&quot;cyan&quot;</span>, <span class="st">&quot;mistyrose&quot;</span>,</span>
+<span id="cb53-18"><a href="#cb53-18" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;deepskyblue&quot;</span>, <span class="st">&quot;springgreen&quot;</span>)</span>
+<span id="cb53-19"><a href="#cb53-19" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> res_type_df[<span class="st">&#39;COUNT&#39;</span>].values.tolist()</span>
+<span id="cb53-20"><a href="#cb53-20" aria-hidden="true" tabindex="-1"></a>types <span class="op">=</span> res_type_df[<span class="st">&#39;residentialtype&#39;</span>].values.tolist()</span>
+<span id="cb53-21"><a href="#cb53-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-22"><a href="#cb53-22" aria-hidden="true" tabindex="-1"></a>wp <span class="op">=</span> { <span class="st">&#39;linewidth&#39;</span> : <span class="dv">1</span>, <span class="st">&#39;edgecolor&#39;</span> : <span class="st">&quot;green&quot;</span> }</span>
+<span id="cb53-23"><a href="#cb53-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-24"><a href="#cb53-24" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> func(pct, allvalues):</span>
+<span id="cb53-25"><a href="#cb53-25" aria-hidden="true" tabindex="-1"></a>    absolute <span class="op">=</span> <span class="bu">int</span>(pct <span class="op">/</span> <span class="fl">100.</span><span class="op">*</span>np.<span class="bu">sum</span>(allvalues))</span>
+<span id="cb53-26"><a href="#cb53-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">&quot;</span><span class="sc">{:.1f}</span><span class="st">%</span><span class="ch">\n</span><span class="st">(</span><span class="sc">{:d}</span><span class="st">)&quot;</span>.<span class="bu">format</span>(pct, absolute)</span>
+<span id="cb53-27"><a href="#cb53-27" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb53-28"><a href="#cb53-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating plot</span></span>
+<span id="cb53-29"><a href="#cb53-29" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize <span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>))</span>
+<span id="cb53-30"><a href="#cb53-30" aria-hidden="true" tabindex="-1"></a>wedges, texts, autotexts <span class="op">=</span> ax.pie(data,</span>
+<span id="cb53-31"><a href="#cb53-31" aria-hidden="true" tabindex="-1"></a>                                  autopct <span class="op">=</span> <span class="kw">lambda</span> pct: func(pct, data),</span>
+<span id="cb53-32"><a href="#cb53-32" aria-hidden="true" tabindex="-1"></a>                                  explode <span class="op">=</span> explode,</span>
+<span id="cb53-33"><a href="#cb53-33" aria-hidden="true" tabindex="-1"></a>                                  labels <span class="op">=</span> types,</span>
+<span id="cb53-34"><a href="#cb53-34" aria-hidden="true" tabindex="-1"></a>                                  shadow <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb53-35"><a href="#cb53-35" aria-hidden="true" tabindex="-1"></a>                                  colors <span class="op">=</span> colors,</span>
+<span id="cb53-36"><a href="#cb53-36" aria-hidden="true" tabindex="-1"></a>                                  startangle <span class="op">=</span> <span class="dv">90</span>,</span>
+<span id="cb53-37"><a href="#cb53-37" aria-hidden="true" tabindex="-1"></a>                                  wedgeprops <span class="op">=</span> wp,</span>
+<span id="cb53-38"><a href="#cb53-38" aria-hidden="true" tabindex="-1"></a>                                  textprops <span class="op">=</span> <span class="bu">dict</span>(color <span class="op">=</span><span class="st">&quot;black&quot;</span>))</span>
+<span id="cb53-39"><a href="#cb53-39" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb53-40"><a href="#cb53-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Adding legend</span></span>
+<span id="cb53-41"><a href="#cb53-41" aria-hidden="true" tabindex="-1"></a>ax.legend(wedges, types,</span>
+<span id="cb53-42"><a href="#cb53-42" aria-hidden="true" tabindex="-1"></a>          title <span class="op">=</span><span class="st">&quot;Residential Types&quot;</span>,</span>
+<span id="cb53-43"><a href="#cb53-43" aria-hidden="true" tabindex="-1"></a>          loc <span class="op">=</span><span class="st">&quot;center left&quot;</span>,</span>
+<span id="cb53-44"><a href="#cb53-44" aria-hidden="true" tabindex="-1"></a>          bbox_to_anchor <span class="op">=</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">0.5</span>, <span class="dv">1</span>))</span>
+<span id="cb53-45"><a href="#cb53-45" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb53-46"><a href="#cb53-46" aria-hidden="true" tabindex="-1"></a>plt.setp(autotexts, size <span class="op">=</span> <span class="dv">8</span>, weight <span class="op">=</span><span class="st">&quot;bold&quot;</span>)</span>
+<span id="cb53-47"><a href="#cb53-47" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">&quot;Percentage of Residential Types for All Towns</span><span class="ch">\n\n\n</span><span class="st">&quot;</span>)</span>
+<span id="cb53-48"><a href="#cb53-48" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb53-49"><a href="#cb53-49" aria-hidden="true" tabindex="-1"></a><span class="co"># show plot</span></span>
+<span id="cb53-50"><a href="#cb53-50" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
 <div class="output stream stdout">
 <pre><code>0            Condo
 1      Four Family
@@ -44114,7 +44230,7 @@ Name: residentialtype, dtype: object
 </div>
 <div class="output display_data">
 <p><img
-src="vertopal_31db626cf60f4e4a9ac6e5c0803b2f47/9f1ccb62fe86aa18c23605af8c43d27045de88b5.png"
+src="vertopal_1a7841c621db4f89a322eb173a598744/9f1ccb62fe86aa18c23605af8c43d27045de88b5.png"
 width="1000" height="700" /></p>
 </div>
 </div>
@@ -44129,42 +44245,42 @@ total sales.</p>
 showing which town purchased the most real estate and showing the most
 popular residence type.</p>
 </div>
-<div id="2c76a581" class="cell code" data-execution_count="114">
-<div class="sourceCode" id="cb53"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="bu">type</span> <span class="kw">in</span> cleanedList:</span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>    temp_df <span class="op">=</span> temp[<span class="bu">type</span>]</span>
-<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Turn on the grid</span></span>
-<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>    temp_df.plot.bar(figsize<span class="op">=</span>(<span class="dv">70</span>,<span class="dv">10</span>), title<span class="op">=</span><span class="st">&#39;Number of &#39;</span> <span class="op">+</span> <span class="bu">type</span> <span class="op">+</span> <span class="st">&#39; Homes for each Town&#39;</span>)</span>
-<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">&#39;Town&#39;</span>)</span>
-<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">&#39;Number of &#39;</span> <span class="op">+</span> <span class="bu">type</span> <span class="op">+</span> <span class="st">&#39; Sales&#39;</span>)</span>
-<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
-<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
+<div id="2c76a581" class="cell code">
+<div class="sourceCode" id="cb55"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="bu">type</span> <span class="kw">in</span> cleanedList:</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>    temp_df <span class="op">=</span> temp[<span class="bu">type</span>]</span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Turn on the grid</span></span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>    temp_df.plot.bar(figsize<span class="op">=</span>(<span class="dv">70</span>,<span class="dv">10</span>), title<span class="op">=</span><span class="st">&#39;Number of &#39;</span> <span class="op">+</span> <span class="bu">type</span> <span class="op">+</span> <span class="st">&#39; Homes for each Town&#39;</span>)</span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">&#39;Town&#39;</span>)</span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">&#39;Number of &#39;</span> <span class="op">+</span> <span class="bu">type</span> <span class="op">+</span> <span class="st">&#39; Sales&#39;</span>)</span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
 <div class="output display_data">
 <p><img
-src="vertopal_31db626cf60f4e4a9ac6e5c0803b2f47/1738785397a3dd8eaf10d399c28d4c38f7126565.png"
+src="vertopal_1a7841c621db4f89a322eb173a598744/1738785397a3dd8eaf10d399c28d4c38f7126565.png"
 width="7000" height="1000" /></p>
 </div>
 <div class="output display_data">
 <p><img
-src="vertopal_31db626cf60f4e4a9ac6e5c0803b2f47/bda4e7b89cd49a44e24fe69678556b70e63830be.png"
+src="vertopal_1a7841c621db4f89a322eb173a598744/bda4e7b89cd49a44e24fe69678556b70e63830be.png"
 width="7000" height="1000" /></p>
 </div>
 <div class="output display_data">
 <p><img
-src="vertopal_31db626cf60f4e4a9ac6e5c0803b2f47/d38690b71a7ba4d588fd03ea61ac04af372e1b39.png"
+src="vertopal_1a7841c621db4f89a322eb173a598744/d38690b71a7ba4d588fd03ea61ac04af372e1b39.png"
 width="7000" height="1000" /></p>
 </div>
 <div class="output display_data">
 <p><img
-src="vertopal_31db626cf60f4e4a9ac6e5c0803b2f47/18818e70dd97202b28812e2f34900f3a3ea81090.png"
+src="vertopal_1a7841c621db4f89a322eb173a598744/18818e70dd97202b28812e2f34900f3a3ea81090.png"
 width="7000" height="1000" /></p>
 </div>
 <div class="output display_data">
 <p><img
-src="vertopal_31db626cf60f4e4a9ac6e5c0803b2f47/32bea0454bb4fc325a79f0723c45e70c6617e5df.png"
+src="vertopal_1a7841c621db4f89a322eb173a598744/32bea0454bb4fc325a79f0723c45e70c6617e5df.png"
 width="7000" height="1000" /></p>
 </div>
 </div>
@@ -44179,27 +44295,27 @@ respectively.</p>
 houses, to get an overall assessment of the average value of homes as
 seen from their assessed amount in each town.</p>
 </div>
-<div id="d0574bb5" class="cell code" data-execution_count="115">
-<div class="sourceCode" id="cb54"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make table with just town and assessedvalue columns</span></span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> df_merge[[<span class="st">&#39;town&#39;</span>, <span class="st">&#39;assessedvalue&#39;</span>]]</span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="co"># group by town and average the assessedvalue</span></span>
-<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> df2.groupby(<span class="st">&#39;town&#39;</span>).mean()</span>
-<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a><span class="co"># remove the rows where town is &#39;***Unknown***&#39;</span></span>
-<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> df2[df2.index <span class="op">!=</span> <span class="st">&#39;***Unknown***&#39;</span>]</span>
-<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a>df2.head()</span>
-<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a><span class="co"># bar graph with town vs assessedvalue</span></span>
-<span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a>df2.plot.bar(figsize<span class="op">=</span>(<span class="dv">30</span>,<span class="dv">10</span>), title<span class="op">=</span><span class="st">&#39;Average Assessed Value by Town&#39;</span>)</span>
-<span id="cb54-14"><a href="#cb54-14" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Town&#39;</span>)</span>
-<span id="cb54-15"><a href="#cb54-15" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Average Assessed Value (in hundred thousands)&#39;</span>)</span>
-<span id="cb54-16"><a href="#cb54-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<div id="d0574bb5" class="cell code">
+<div class="sourceCode" id="cb56"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make table with just town and assessedvalue columns</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> df_merge[[<span class="st">&#39;town&#39;</span>, <span class="st">&#39;assessedvalue&#39;</span>]]</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="co"># group by town and average the assessedvalue</span></span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> df2.groupby(<span class="st">&#39;town&#39;</span>).mean()</span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a><span class="co"># remove the rows where town is &#39;***Unknown***&#39;</span></span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> df2[df2.index <span class="op">!=</span> <span class="st">&#39;***Unknown***&#39;</span>]</span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a>df2.head()</span>
+<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-12"><a href="#cb56-12" aria-hidden="true" tabindex="-1"></a><span class="co"># bar graph with town vs assessedvalue</span></span>
+<span id="cb56-13"><a href="#cb56-13" aria-hidden="true" tabindex="-1"></a>df2.plot.bar(figsize<span class="op">=</span>(<span class="dv">30</span>,<span class="dv">10</span>), title<span class="op">=</span><span class="st">&#39;Average Assessed Value by Town&#39;</span>)</span>
+<span id="cb56-14"><a href="#cb56-14" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Town&#39;</span>)</span>
+<span id="cb56-15"><a href="#cb56-15" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Average Assessed Value (in hundred thousands)&#39;</span>)</span>
+<span id="cb56-16"><a href="#cb56-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
 <div class="output display_data">
 <p><img
-src="vertopal_31db626cf60f4e4a9ac6e5c0803b2f47/4561d087946300a3549aa58701a2277829fd483a.png"
+src="vertopal_1a7841c621db4f89a322eb173a598744/4561d087946300a3549aa58701a2277829fd483a.png"
 width="3000" height="1000" /></p>
 </div>
 </div>
@@ -44215,27 +44331,27 @@ Greenwich, New Canaan, etc.</p>
 houses, to get an overall assessment of the average value of homes as
 seen from their sale amount in each town.</p>
 </div>
-<div id="d68c8bd5" class="cell code" data-execution_count="116">
-<div class="sourceCode" id="cb55"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make table with just town and saleamount columns</span></span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>df3 <span class="op">=</span> df_merge[[<span class="st">&#39;town&#39;</span>, <span class="st">&#39;saleamount&#39;</span>]]</span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="co"># group by town and average the saleamount</span></span>
-<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>df3 <span class="op">=</span> df3.groupby(<span class="st">&#39;town&#39;</span>).mean()</span>
-<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a><span class="co"># remove the rows where town is &#39;***Unknown***&#39;</span></span>
-<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>df3 <span class="op">=</span> df3[df3.index <span class="op">!=</span> <span class="st">&#39;***Unknown***&#39;</span>]</span>
-<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a>df3.head()</span>
-<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-12"><a href="#cb55-12" aria-hidden="true" tabindex="-1"></a><span class="co"># bar graph with town vs saleamount</span></span>
-<span id="cb55-13"><a href="#cb55-13" aria-hidden="true" tabindex="-1"></a>df3.plot.bar(figsize<span class="op">=</span>(<span class="dv">30</span>,<span class="dv">10</span>), title<span class="op">=</span><span class="st">&#39;Average Sale Amount by Town&#39;</span>)</span>
-<span id="cb55-14"><a href="#cb55-14" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Town&#39;</span>)</span>
-<span id="cb55-15"><a href="#cb55-15" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Average Sale Amount&#39;</span>)</span>
-<span id="cb55-16"><a href="#cb55-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<div id="d68c8bd5" class="cell code">
+<div class="sourceCode" id="cb57"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make table with just town and saleamount columns</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>df3 <span class="op">=</span> df_merge[[<span class="st">&#39;town&#39;</span>, <span class="st">&#39;saleamount&#39;</span>]]</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="co"># group by town and average the saleamount</span></span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>df3 <span class="op">=</span> df3.groupby(<span class="st">&#39;town&#39;</span>).mean()</span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a><span class="co"># remove the rows where town is &#39;***Unknown***&#39;</span></span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>df3 <span class="op">=</span> df3[df3.index <span class="op">!=</span> <span class="st">&#39;***Unknown***&#39;</span>]</span>
+<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a>df3.head()</span>
+<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a><span class="co"># bar graph with town vs saleamount</span></span>
+<span id="cb57-13"><a href="#cb57-13" aria-hidden="true" tabindex="-1"></a>df3.plot.bar(figsize<span class="op">=</span>(<span class="dv">30</span>,<span class="dv">10</span>), title<span class="op">=</span><span class="st">&#39;Average Sale Amount by Town&#39;</span>)</span>
+<span id="cb57-14"><a href="#cb57-14" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Town&#39;</span>)</span>
+<span id="cb57-15"><a href="#cb57-15" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Average Sale Amount&#39;</span>)</span>
+<span id="cb57-16"><a href="#cb57-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
 <div class="output display_data">
 <p><img
-src="vertopal_31db626cf60f4e4a9ac6e5c0803b2f47/dcdf0f780bf5db2789a4e1a097ae12fa713b3b5e.png"
+src="vertopal_1a7841c621db4f89a322eb173a598744/dcdf0f780bf5db2789a4e1a097ae12fa713b3b5e.png"
 width="3000" height="1000" /></p>
 </div>
 </div>
@@ -44247,28 +44363,28 @@ this graph, we can also observe that the towns with a signficantly
 higher average assessed value of homes, such as Darien, Greenwich, New
 Canaan, follow with the signficantly higher sales amounts as well.</p>
 </div>
-<div id="7eb2e617" class="cell code" data-execution_count="117">
-<div class="sourceCode" id="cb56"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Group the DataFrame by &#39;listyear&#39; and calculate the mean &#39;saleamount&#39;</span></span>
-<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>grouped_df <span class="op">=</span> df_merge.groupby(<span class="st">&#39;listyear&#39;</span>)[<span class="st">&#39;saleamount&#39;</span>].mean()</span>
-<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Get unique years</span></span>
-<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>years <span class="op">=</span> np.unique(df[<span class="st">&#39;listyear&#39;</span>])</span>
-<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">17</span>, <span class="dv">15</span>))</span>
-<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a>plt.plot(years, grouped_df.values)</span>
-<span id="cb56-12"><a href="#cb56-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-13"><a href="#cb56-13" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Year&#39;</span>)</span>
-<span id="cb56-14"><a href="#cb56-14" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Sale amount&#39;</span>)</span>
-<span id="cb56-15"><a href="#cb56-15" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&quot;Sale Amount over Time&quot;</span>)</span>
-<span id="cb56-16"><a href="#cb56-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-17"><a href="#cb56-17" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<div id="7eb2e617" class="cell code">
+<div class="sourceCode" id="cb58"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Group the DataFrame by &#39;listyear&#39; and calculate the mean &#39;saleamount&#39;</span></span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>grouped_df <span class="op">=</span> df_merge.groupby(<span class="st">&#39;listyear&#39;</span>)[<span class="st">&#39;saleamount&#39;</span>].mean()</span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Get unique years</span></span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>years <span class="op">=</span> np.unique(df[<span class="st">&#39;listyear&#39;</span>])</span>
+<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">17</span>, <span class="dv">15</span>))</span>
+<span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a>plt.plot(years, grouped_df.values)</span>
+<span id="cb58-12"><a href="#cb58-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-13"><a href="#cb58-13" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Year&#39;</span>)</span>
+<span id="cb58-14"><a href="#cb58-14" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Sale amount&#39;</span>)</span>
+<span id="cb58-15"><a href="#cb58-15" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&quot;Sale Amount over Time&quot;</span>)</span>
+<span id="cb58-16"><a href="#cb58-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-17"><a href="#cb58-17" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
 <div class="output display_data">
 <p><img
-src="vertopal_31db626cf60f4e4a9ac6e5c0803b2f47/fe5f5e6ee7eab74bcc9cee055569097686b40fd9.png"
+src="vertopal_1a7841c621db4f89a322eb173a598744/fe5f5e6ee7eab74bcc9cee055569097686b40fd9.png"
 width="1700" height="1500" /></p>
 </div>
 </div>
@@ -44285,21 +44401,21 @@ What do you expect to see in this line graph? Will there be a general
 trend of increasing or decreasing sales ratio over time? Let's code it
 up and take a look!</p>
 </div>
-<div id="dc63f9e1" class="cell code" data-execution_count="118">
-<div class="sourceCode" id="cb57"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">20</span>,<span class="dv">10</span>))</span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="co"># plot each town&#39;s salesratio vs time onto a line graph</span></span>
-<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> town <span class="kw">in</span> df_merge[<span class="st">&#39;town&#39;</span>].unique():</span>
-<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>    df_town <span class="op">=</span> df_merge[df_merge[<span class="st">&#39;town&#39;</span>] <span class="op">==</span> town]</span>
-<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>    df_town.sort_values(by<span class="op">=</span><span class="st">&#39;Year&#39;</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>    plt.plot(df_town[<span class="st">&#39;Year&#39;</span>], df_town[<span class="st">&#39;salesratio&#39;</span>], label<span class="op">=</span>town)</span>
-<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Year&#39;</span>)</span>
-<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Sales Ratio&#39;</span>)</span>
-<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&quot;Sales Ratio over Time&quot;</span>)</span>
-<span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb57-13"><a href="#cb57-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<div id="dc63f9e1" class="cell code">
+<div class="sourceCode" id="cb59"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">20</span>,<span class="dv">10</span>))</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="co"># plot each town&#39;s salesratio vs time onto a line graph</span></span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> town <span class="kw">in</span> df_merge[<span class="st">&#39;town&#39;</span>].unique():</span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>    df_town <span class="op">=</span> df_merge[df_merge[<span class="st">&#39;town&#39;</span>] <span class="op">==</span> town]</span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>    df_town.sort_values(by<span class="op">=</span><span class="st">&#39;Year&#39;</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>    plt.plot(df_town[<span class="st">&#39;Year&#39;</span>], df_town[<span class="st">&#39;salesratio&#39;</span>], label<span class="op">=</span>town)</span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Year&#39;</span>)</span>
+<span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Sales Ratio&#39;</span>)</span>
+<span id="cb59-11"><a href="#cb59-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&quot;Sales Ratio over Time&quot;</span>)</span>
+<span id="cb59-12"><a href="#cb59-12" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb59-13"><a href="#cb59-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
 <div class="output stream stderr">
 <pre><code>/var/folders/04/hdjfckkd4fd__5521d_kggjh0000gn/T/ipykernel_72246/682255871.py:5: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame
@@ -44309,7 +44425,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 <div class="output display_data">
 <p><img
-src="vertopal_31db626cf60f4e4a9ac6e5c0803b2f47/849692903ff17bef34720f717d4a137ca3c1edc8.png"
+src="vertopal_1a7841c621db4f89a322eb173a598744/849692903ff17bef34720f717d4a137ca3c1edc8.png"
 width="2000" height="1000" /></p>
 </div>
 </div>
